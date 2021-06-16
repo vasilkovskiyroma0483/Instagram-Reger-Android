@@ -11,10 +11,6 @@ namespace Live.com_Сombiner
     public partial class Form1 : Form
     {
         #region Свойства класа
-        /// <summary>
-        /// List с Аккаунтами
-        /// </summary>
-        List<string> Account = new List<string>();
         public static Stopwatch stopwatch = new Stopwatch();
         #endregion
 
@@ -25,7 +21,6 @@ namespace Live.com_Сombiner
             UserAgentFileBox.Text = Properties.Settings.Default.UserAgentFileBox;
             ProxyFilePathBox.Text = Properties.Settings.Default.ProxyFilePathBox;
             ProxyCheckLinkBox.Text = Properties.Settings.Default.ProxyCheckLinkBox;
-            OperatingModeBox.SelectedIndex = Properties.Settings.Default.OperatingModeBox;
             ProxySourceBox.SelectedIndex = Properties.Settings.Default.ProxySourceBox;
             ProxyModeBox.SelectedIndex = Properties.Settings.Default.ProxyModeBox;
             TypeOfProxyBox.SelectedIndex = Properties.Settings.Default.TypeOfProxyBox;
@@ -34,7 +29,6 @@ namespace Live.com_Сombiner
             CountRequestNumeric.Value = Properties.Settings.Default.CountRequestNumeric;
             CountThreadNumeric.Value = Properties.Settings.Default.CountThreadNumeric;
             DisableLogBox.Checked = Properties.Settings.Default.DisableLogBox;
-            ClientKeyBox.Text = Properties.Settings.Default.ClientKeyBox;
             NameSurnameBox.Text = Properties.Settings.Default.NameSurnameBox;
             PasswordFileBox.Text = Properties.Settings.Default.PasswordFileBox;
             PasswordGenerateCheckBox.Checked = Properties.Settings.Default.PasswordGenerateCheckBox;
@@ -49,7 +43,6 @@ namespace Live.com_Сombiner
                 Properties.Settings.Default.UserAgentFileBox = UserAgentFileBox.Text;
                 Properties.Settings.Default.ProxyFilePathBox = ProxyFilePathBox.Text;
                 Properties.Settings.Default.ProxyCheckLinkBox = ProxyCheckLinkBox.Text;
-                Properties.Settings.Default.OperatingModeBox = OperatingModeBox.SelectedIndex;
                 Properties.Settings.Default.ProxySourceBox = ProxySourceBox.SelectedIndex;
                 Properties.Settings.Default.ProxyModeBox = ProxyModeBox.SelectedIndex;
                 Properties.Settings.Default.TypeOfProxyBox = TypeOfProxyBox.SelectedIndex;
@@ -58,7 +51,6 @@ namespace Live.com_Сombiner
                 Properties.Settings.Default.CountRequestNumeric = (int)CountRequestNumeric.Value;
                 Properties.Settings.Default.CountThreadNumeric = (int)CountThreadNumeric.Value;
                 Properties.Settings.Default.DisableLogBox = DisableLogBox.Checked;
-                Properties.Settings.Default.ClientKeyBox = ClientKeyBox.Text;
                 Properties.Settings.Default.NameSurnameBox = NameSurnameBox.Text;
                 Properties.Settings.Default.PasswordFileBox = PasswordFileBox.Text;
                 Properties.Settings.Default.PasswordGenerateCheckBox = PasswordGenerateCheckBox.Checked;
@@ -114,40 +106,18 @@ namespace Live.com_Сombiner
                     MessageBox.Show("Количество потоков не может быть меньше либо равнятся нулю!");
                     return false;
                 }
-                if (OperatingModeBox.Text == "Регистратор")
+                if (CountThreadNumeric.Value > CountAccountNumeric.Value)
                 {
-                    if (CountThreadNumeric.Value > CountAccountNumeric.Value)
-                    {
-                        MessageBox.Show("Количество потоков не может быть больше количества регистрируемых аккаунтов!");
-                        return false;
-                    }
+                    MessageBox.Show("Количество потоков не может быть больше количества регистрируемых аккаунтов!");
+                    return false;
                 }
-                else
-                {
-                    if (CountThreadNumeric.Value > Account.Count)
-                    {
-                        MessageBox.Show("Количество потоков не может быть больше количества аккаунтов!");
-                        return false;
-                    }
-                }
+
                 if (!GetUserAgent.FillInUserAgents(UserAgentFileBox.Text, BuiltInUserAgents.Checked))
                     return false;
                 if (!GetProxy.FillInProxy(ProxyFilePathBox.Text, ProxySourceBox.Text, ProxyModeBox.Text, TypeOfProxyBox.Text, ProxyCheckLinkBox.Text))
                     return false;
-                if (!CheckBalanceCaptcha())
-                    return false;
                 if (!GetNameSurnamePassword.FillInData(NameSurnameBox.Text, PasswordGenerateCheckBox.Checked, PasswordFileBox.Text))
                     return false;
-                //if (!GetEmail.FillInData(EmailBox.Text))
-                //    return false;
-                if (!GetSmsReg.FillInSettings(CountrySmsRegBox.Text, ServiceSmsRegBox.Text, APIKeySmsRegBox.Text))
-                    return false;
-
-                //if (GetEmail.EmailPassword.Count < CountThreadNumeric.Value || GetEmail.EmailPassword.Count < CountAccountNumeric.Value)
-                //{
-                //    MessageBox.Show("Количество почт не может быть меньше количества потоков или количества регестрируеммых аккаунтов.");
-                //    return false;
-                //}
 
                 // Очистки лога, и запуск таймера.
                 LogBox.Text = "";
@@ -159,7 +129,6 @@ namespace Live.com_Сombiner
                 SaveData.UsedRegistration = 0;
                 SaveData.GoodRegistration = 0;
                 SaveData.InvalidRegistration = 0;
-                SaveData.Block24h = 0;
                 SaveData.UnknownError = 0;
                 SaveData.captcha = 0;
 
@@ -168,7 +137,6 @@ namespace Live.com_Сombiner
                 WorkWithAccount.minPauseRegistration = (int)MinPauseRegistrationNumeric.Value * 60000;
                 WorkWithAccount.maxPauseRegistration = (int)MaxPauseRegistrationNumeric.Value * 60000;
                 WorkWithAccount.countRequest = (int)CountRequestNumeric.Value;
-                WorkWithAccount.OperatingMode = OperatingModeBox.Text;
                 Controller.countThread = (int)CountThreadNumeric.Value;
                 WorkWithAccount.CountAccountForRegistration = (int)CountAccountNumeric.Value;
             }
@@ -254,7 +222,6 @@ namespace Live.com_Сombiner
                 UsedRegistrationLabel.Text = $"Отработано: {SaveData.UsedRegistration}";
                 GoodRegistrationLabel.Text = $"Удачно: {SaveData.GoodRegistration}";
                 InvalidRegistrationLabel.Text = $"Не удачно: {SaveData.InvalidRegistration}";
-                Block24hLabel.Text = $"Блок 24 часа: {SaveData.Block24h}";
                 UnknownErrorLabel.Text = $"Неизвестная ошибка: {SaveData.UnknownError}";
                 CaptchLabel.Text = $"Каптч: {SaveData.captcha}";
 
@@ -268,8 +235,10 @@ namespace Live.com_Сombiner
                     SaveData.InvalidRegistrationList.Clear();
                     File.AppendAllLines("out/regger/processed.txt", SaveData.ProcessedRegistrationList);
                     SaveData.ProcessedRegistrationList.Clear();
-                    File.AppendAllLines("out/regger/Block24h.txt", SaveData.Block24hList);
-                    SaveData.Block24hList.Clear();
+                    File.AppendAllLines("out/regger/captcha.txt", SaveData.CaptchaList);
+                    SaveData.CaptchaList.Clear();
+                    File.AppendAllLines("out/regger/unknown_error.txt", SaveData.UnknownErrorList);
+                    SaveData.UnknownErrorList.Clear();
                 }
 
                 // Запись данных в Лог.
@@ -314,39 +283,5 @@ namespace Live.com_Сombiner
             catch (Exception exception) { MessageBox.Show(exception.Message); }
         }
         #endregion
-
-        #region Методы проверки баланса капчи
-        private void CheckBalanceCaptchaButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                CheckBalanceCaptcha();
-            }
-            catch (Exception exception) { MessageBox.Show(exception.Message); }
-        }
-        public bool CheckBalanceCaptcha()
-        {
-            try
-            {
-                string result = GetCaptcha.CheckBalance(ClientKeyBox.Text);
-                if (result != "")
-                {
-                    AntiCaptchaBalanceBox.Text = $"Текущий баланс: {(Convert.ToDouble(result.Replace(".", ","))).ToString("#.##")} $";
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show("Проверьте Client Key");
-                    return false;
-                }
-            }
-            catch (Exception exception) { MessageBox.Show(exception.Message); }
-            return false;
-        }
-        #endregion
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-        }
     }
 }

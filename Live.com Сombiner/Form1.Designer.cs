@@ -36,26 +36,12 @@ namespace Live.com_Сombiner
             this.UploadProxyButton = new System.Windows.Forms.Button();
             this.UploadUserAgentButton = new System.Windows.Forms.Button();
             this.StopWatchLabel = new System.Windows.Forms.Label();
-            this.OperatingModeBox = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.DisableLogBox = new System.Windows.Forms.CheckBox();
             this.LogBox = new System.Windows.Forms.RichTextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.AntiCaptchaBalanceBox = new System.Windows.Forms.Label();
-            this.CheckBalanceCaptchaButton = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.ClientKeyBox = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.guna2GroupBox1 = new Guna.UI2.WinForms.Guna2GroupBox();
-            this.APIKeySmsRegBox = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.ServiceSmsRegBox = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.CountrySmsRegBox = new Guna.UI2.WinForms.Guna2ComboBox();
             this.guna2GroupBox2 = new Guna.UI2.WinForms.Guna2GroupBox();
             this.ProxyCheckLinkBox = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel9 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -97,16 +83,13 @@ namespace Live.com_Сombiner
             this.NameSurnameBox = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel15 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2GroupBox5 = new Guna.UI2.WinForms.Guna2GroupBox();
+            this.CaptchLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.UnknownErrorLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.Block24hLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.InvalidRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.GoodRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.UsedRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            this.UnknownErrorLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.CaptchLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.guna2GroupBox1.SuspendLayout();
             this.guna2GroupBox2.SuspendLayout();
             this.guna2GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CountThreadNumeric)).BeginInit();
@@ -122,7 +105,7 @@ namespace Live.com_Сombiner
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(31, 1212);
+            this.button1.Location = new System.Drawing.Point(24, 1106);
             this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(248, 76);
@@ -133,7 +116,7 @@ namespace Live.com_Сombiner
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(347, 1212);
+            this.button2.Location = new System.Drawing.Point(340, 1106);
             this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(248, 76);
@@ -167,31 +150,11 @@ namespace Live.com_Сombiner
             // StopWatchLabel
             // 
             this.StopWatchLabel.AutoSize = true;
-            this.StopWatchLabel.Location = new System.Drawing.Point(25, 1305);
+            this.StopWatchLabel.Location = new System.Drawing.Point(18, 1199);
             this.StopWatchLabel.Name = "StopWatchLabel";
             this.StopWatchLabel.Size = new System.Drawing.Size(393, 32);
             this.StopWatchLabel.TabIndex = 43;
             this.StopWatchLabel.Text = "Время работы программы  0";
-            // 
-            // OperatingModeBox
-            // 
-            this.OperatingModeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.OperatingModeBox.FormattingEnabled = true;
-            this.OperatingModeBox.Items.AddRange(new object[] {
-            "Регистратор"});
-            this.OperatingModeBox.Location = new System.Drawing.Point(31, 1158);
-            this.OperatingModeBox.Name = "OperatingModeBox";
-            this.OperatingModeBox.Size = new System.Drawing.Size(564, 39);
-            this.OperatingModeBox.TabIndex = 38;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(25, 1111);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(210, 32);
-            this.label20.TabIndex = 39;
-            this.label20.Text = "Режим работы";
             // 
             // timer1
             // 
@@ -228,55 +191,6 @@ namespace Live.com_Сombiner
             this.LogBox.TabIndex = 0;
             this.LogBox.Text = "";
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.AntiCaptchaBalanceBox);
-            this.groupBox5.Controls.Add(this.CheckBalanceCaptchaButton);
-            this.groupBox5.Controls.Add(this.label13);
-            this.groupBox5.Controls.Add(this.ClientKeyBox);
-            this.groupBox5.Location = new System.Drawing.Point(31, 1350);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(564, 183);
-            this.groupBox5.TabIndex = 45;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Anticaptcha";
-            // 
-            // AntiCaptchaBalanceBox
-            // 
-            this.AntiCaptchaBalanceBox.AutoSize = true;
-            this.AntiCaptchaBalanceBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AntiCaptchaBalanceBox.Location = new System.Drawing.Point(181, 121);
-            this.AntiCaptchaBalanceBox.Name = "AntiCaptchaBalanceBox";
-            this.AntiCaptchaBalanceBox.Size = new System.Drawing.Size(263, 32);
-            this.AntiCaptchaBalanceBox.TabIndex = 3;
-            this.AntiCaptchaBalanceBox.Text = "Текущий баланс: 0";
-            // 
-            // CheckBalanceCaptchaButton
-            // 
-            this.CheckBalanceCaptchaButton.Location = new System.Drawing.Point(26, 112);
-            this.CheckBalanceCaptchaButton.Name = "CheckBalanceCaptchaButton";
-            this.CheckBalanceCaptchaButton.Size = new System.Drawing.Size(122, 49);
-            this.CheckBalanceCaptchaButton.TabIndex = 2;
-            this.CheckBalanceCaptchaButton.Text = "Check";
-            this.CheckBalanceCaptchaButton.UseVisualStyleBackColor = true;
-            this.CheckBalanceCaptchaButton.Click += new System.EventHandler(this.CheckBalanceCaptchaButton_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(20, 53);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 32);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "Key:";
-            // 
-            // ClientKeyBox
-            // 
-            this.ClientKeyBox.Location = new System.Drawing.Point(98, 53);
-            this.ClientKeyBox.Name = "ClientKeyBox";
-            this.ClientKeyBox.Size = new System.Drawing.Size(445, 38);
-            this.ClientKeyBox.TabIndex = 0;
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(496, 214);
@@ -298,157 +212,6 @@ namespace Live.com_Сombiner
             this.button3.Text = "+";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // guna2GroupBox1
-            // 
-            this.guna2GroupBox1.Controls.Add(this.APIKeySmsRegBox);
-            this.guna2GroupBox1.Controls.Add(this.guna2HtmlLabel3);
-            this.guna2GroupBox1.Controls.Add(this.guna2HtmlLabel2);
-            this.guna2GroupBox1.Controls.Add(this.ServiceSmsRegBox);
-            this.guna2GroupBox1.Controls.Add(this.guna2HtmlLabel1);
-            this.guna2GroupBox1.Controls.Add(this.CountrySmsRegBox);
-            this.guna2GroupBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2GroupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.guna2GroupBox1.Location = new System.Drawing.Point(621, 1084);
-            this.guna2GroupBox1.Name = "guna2GroupBox1";
-            this.guna2GroupBox1.ShadowDecoration.Parent = this.guna2GroupBox1;
-            this.guna2GroupBox1.Size = new System.Drawing.Size(564, 342);
-            this.guna2GroupBox1.TabIndex = 62;
-            this.guna2GroupBox1.Text = "sms-reg.com";
-            // 
-            // APIKeySmsRegBox
-            // 
-            this.APIKeySmsRegBox.BackColor = System.Drawing.SystemColors.Control;
-            this.APIKeySmsRegBox.BorderColor = System.Drawing.Color.Black;
-            this.APIKeySmsRegBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.APIKeySmsRegBox.DefaultText = "x4fcgpfhdunrgwmqpgk15nohw5qdiuvz";
-            this.APIKeySmsRegBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.APIKeySmsRegBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.APIKeySmsRegBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.APIKeySmsRegBox.DisabledState.Parent = this.APIKeySmsRegBox;
-            this.APIKeySmsRegBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.APIKeySmsRegBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.APIKeySmsRegBox.FocusedState.Parent = this.APIKeySmsRegBox;
-            this.APIKeySmsRegBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.APIKeySmsRegBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.APIKeySmsRegBox.HoverState.Parent = this.APIKeySmsRegBox;
-            this.APIKeySmsRegBox.Location = new System.Drawing.Point(20, 283);
-            this.APIKeySmsRegBox.Name = "APIKeySmsRegBox";
-            this.APIKeySmsRegBox.PasswordChar = '\0';
-            this.APIKeySmsRegBox.PlaceholderText = "";
-            this.APIKeySmsRegBox.SelectedText = "";
-            this.APIKeySmsRegBox.SelectionStart = 32;
-            this.APIKeySmsRegBox.ShadowDecoration.Parent = this.APIKeySmsRegBox;
-            this.APIKeySmsRegBox.Size = new System.Drawing.Size(518, 36);
-            this.APIKeySmsRegBox.TabIndex = 6;
-            // 
-            // guna2HtmlLabel3
-            // 
-            this.guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel3.Location = new System.Drawing.Point(20, 233);
-            this.guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            this.guna2HtmlLabel3.Size = new System.Drawing.Size(92, 39);
-            this.guna2HtmlLabel3.TabIndex = 4;
-            this.guna2HtmlLabel3.Text = "API Key";
-            // 
-            // guna2HtmlLabel2
-            // 
-            this.guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel2.Location = new System.Drawing.Point(20, 146);
-            this.guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            this.guna2HtmlLabel2.Size = new System.Drawing.Size(215, 39);
-            this.guna2HtmlLabel2.TabIndex = 3;
-            this.guna2HtmlLabel2.Text = "Выберите сервис";
-            // 
-            // ServiceSmsRegBox
-            // 
-            this.ServiceSmsRegBox.BackColor = System.Drawing.Color.Transparent;
-            this.ServiceSmsRegBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.ServiceSmsRegBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ServiceSmsRegBox.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.ServiceSmsRegBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.ServiceSmsRegBox.FocusedState.Parent = this.ServiceSmsRegBox;
-            this.ServiceSmsRegBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ServiceSmsRegBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.ServiceSmsRegBox.HoverState.Parent = this.ServiceSmsRegBox;
-            this.ServiceSmsRegBox.ItemHeight = 30;
-            this.ServiceSmsRegBox.Items.AddRange(new object[] {
-            "aol",
-            "gmail",
-            "facebook",
-            "mailru",
-            "vk",
-            "classmates",
-            "twitter",
-            "mamba",
-            "uber",
-            "telegram",
-            "badoo",
-            "drugvokrug",
-            "avito",
-            "olx",
-            "steam",
-            "fotostrana",
-            "microsoft",
-            "viber",
-            "whatsapp",
-            "wechat",
-            "seosprint",
-            "instagram",
-            "yahoo",
-            "lineme",
-            "kakaotalk",
-            "meetme",
-            "tinder",
-            "nimses",
-            "youla",
-            "5ka",
-            "other"});
-            this.ServiceSmsRegBox.ItemsAppearance.Parent = this.ServiceSmsRegBox;
-            this.ServiceSmsRegBox.Location = new System.Drawing.Point(20, 191);
-            this.ServiceSmsRegBox.Name = "ServiceSmsRegBox";
-            this.ServiceSmsRegBox.ShadowDecoration.Parent = this.ServiceSmsRegBox;
-            this.ServiceSmsRegBox.Size = new System.Drawing.Size(518, 36);
-            this.ServiceSmsRegBox.StartIndex = 21;
-            this.ServiceSmsRegBox.TabIndex = 2;
-            // 
-            // guna2HtmlLabel1
-            // 
-            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(20, 59);
-            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(213, 39);
-            this.guna2HtmlLabel1.TabIndex = 1;
-            this.guna2HtmlLabel1.Text = "Выберите страну";
-            // 
-            // CountrySmsRegBox
-            // 
-            this.CountrySmsRegBox.BackColor = System.Drawing.Color.Transparent;
-            this.CountrySmsRegBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.CountrySmsRegBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CountrySmsRegBox.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.CountrySmsRegBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.CountrySmsRegBox.FocusedState.Parent = this.CountrySmsRegBox;
-            this.CountrySmsRegBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CountrySmsRegBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.CountrySmsRegBox.HoverState.Parent = this.CountrySmsRegBox;
-            this.CountrySmsRegBox.ItemHeight = 30;
-            this.CountrySmsRegBox.Items.AddRange(new object[] {
-            "all",
-            "ru",
-            "ua",
-            "kz",
-            "cn"});
-            this.CountrySmsRegBox.ItemsAppearance.Parent = this.CountrySmsRegBox;
-            this.CountrySmsRegBox.Location = new System.Drawing.Point(20, 104);
-            this.CountrySmsRegBox.Name = "CountrySmsRegBox";
-            this.CountrySmsRegBox.ShadowDecoration.Parent = this.CountrySmsRegBox;
-            this.CountrySmsRegBox.Size = new System.Drawing.Size(518, 36);
-            this.CountrySmsRegBox.StartIndex = 2;
-            this.CountrySmsRegBox.TabIndex = 0;
             // 
             // guna2GroupBox2
             // 
@@ -1227,6 +990,24 @@ namespace Live.com_Сombiner
             this.guna2GroupBox5.TabIndex = 66;
             this.guna2GroupBox5.Text = "Статистика  регистрации";
             // 
+            // CaptchLabel
+            // 
+            this.CaptchLabel.BackColor = System.Drawing.Color.Transparent;
+            this.CaptchLabel.Location = new System.Drawing.Point(28, 284);
+            this.CaptchLabel.Name = "CaptchLabel";
+            this.CaptchLabel.Size = new System.Drawing.Size(107, 33);
+            this.CaptchLabel.TabIndex = 8;
+            this.CaptchLabel.Text = "Каптч: 0";
+            // 
+            // UnknownErrorLabel
+            // 
+            this.UnknownErrorLabel.BackColor = System.Drawing.Color.Transparent;
+            this.UnknownErrorLabel.Location = new System.Drawing.Point(26, 235);
+            this.UnknownErrorLabel.Name = "UnknownErrorLabel";
+            this.UnknownErrorLabel.Size = new System.Drawing.Size(300, 33);
+            this.UnknownErrorLabel.TabIndex = 7;
+            this.UnknownErrorLabel.Text = "Неизвестная ошибка: 0";
+            // 
             // Block24hLabel
             // 
             this.Block24hLabel.BackColor = System.Drawing.Color.Transparent;
@@ -1263,55 +1044,17 @@ namespace Live.com_Сombiner
             this.UsedRegistrationLabel.TabIndex = 0;
             this.UsedRegistrationLabel.Text = "Отработано: 0";
             // 
-            // guna2Button1
-            // 
-            this.guna2Button1.CheckedState.Parent = this.guna2Button1;
-            this.guna2Button1.CustomImages.Parent = this.guna2Button1;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.HoverState.Parent = this.guna2Button1;
-            this.guna2Button1.Location = new System.Drawing.Point(1341, 1335);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.ShadowDecoration.Parent = this.guna2Button1;
-            this.guna2Button1.Size = new System.Drawing.Size(277, 45);
-            this.guna2Button1.TabIndex = 67;
-            this.guna2Button1.Text = "guna2Button1";
-            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
-            // 
-            // UnknownErrorLabel
-            // 
-            this.UnknownErrorLabel.BackColor = System.Drawing.Color.Transparent;
-            this.UnknownErrorLabel.Location = new System.Drawing.Point(26, 235);
-            this.UnknownErrorLabel.Name = "UnknownErrorLabel";
-            this.UnknownErrorLabel.Size = new System.Drawing.Size(320, 43);
-            this.UnknownErrorLabel.TabIndex = 7;
-            this.UnknownErrorLabel.Text = "Неизвестная ошибка: 0";
-            // 
-            // CaptchLabel
-            // 
-            this.CaptchLabel.BackColor = System.Drawing.Color.Transparent;
-            this.CaptchLabel.Location = new System.Drawing.Point(28, 284);
-            this.CaptchLabel.Name = "CaptchLabel";
-            this.CaptchLabel.Size = new System.Drawing.Size(112, 43);
-            this.CaptchLabel.TabIndex = 8;
-            this.CaptchLabel.Text = "Каптч: 0";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2501, 1540);
-            this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2GroupBox5);
             this.Controls.Add(this.guna2GroupBox4);
             this.Controls.Add(this.guna2GroupBox3);
             this.Controls.Add(this.guna2GroupBox2);
-            this.Controls.Add(this.guna2GroupBox1);
             this.Controls.Add(this.StopWatchLabel);
-            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.OperatingModeBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -1324,10 +1067,6 @@ namespace Live.com_Сombiner
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.guna2GroupBox1.ResumeLayout(false);
-            this.guna2GroupBox1.PerformLayout();
             this.guna2GroupBox2.ResumeLayout(false);
             this.guna2GroupBox2.PerformLayout();
             this.guna2GroupBox3.ResumeLayout(false);
@@ -1353,27 +1092,13 @@ namespace Live.com_Сombiner
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button UploadProxyButton;
         private System.Windows.Forms.Button UploadUserAgentButton;
-        private System.Windows.Forms.ComboBox OperatingModeBox;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label StopWatchLabel;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox DisableLogBox;
         private System.Windows.Forms.RichTextBox LogBox;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox ClientKeyBox;
-        private System.Windows.Forms.Label AntiCaptchaBalanceBox;
-        private System.Windows.Forms.Button CheckBalanceCaptchaButton;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
-        private Guna.UI2.WinForms.Guna2ComboBox ServiceSmsRegBox;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
-        private Guna.UI2.WinForms.Guna2ComboBox CountrySmsRegBox;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
-        private Guna.UI2.WinForms.Guna2TextBox APIKeySmsRegBox;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox2;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
         private Guna.UI2.WinForms.Guna2TextBox ProxyFilePathBox;
@@ -1415,7 +1140,6 @@ namespace Live.com_Сombiner
         private Guna.UI2.WinForms.Guna2HtmlLabel InvalidRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel GoodRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel UsedRegistrationLabel;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2TextBox EmailBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel21;
         private System.Windows.Forms.Button button5;

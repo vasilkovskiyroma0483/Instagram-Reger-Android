@@ -29,15 +29,19 @@ namespace Live.com_Сombiner
         /// </summary>
         public static List<string> InvalidRegistrationList = new List<string>();
         /// <summary>
-        /// Лист аккаунтов с блокировкой на 24 часа.
+        /// Лист с не успешно зарегестрированными аккаунтами
         /// </summary>
-        public static List<string> Block24hList = new List<string>();
+        public static List<string> CaptchaList = new List<string>();
+        /// <summary>
+        /// Лист с не успешно зарегестрированными аккаунтами
+        /// </summary>
+        public static List<string> UnknownErrorList = new List<string>();
         #endregion
 
         /// <summary>
         /// Счетчики успешно выполненных операций по регистрации
         /// </summary>
-        public static int GoodRegistration, InvalidRegistration, UsedRegistration, Block24h, UnknownError, captcha;
+        public static int GoodRegistration, InvalidRegistration, UsedRegistration, UnknownError, captcha;
         #endregion
 
         #region Метод записи данных в лог

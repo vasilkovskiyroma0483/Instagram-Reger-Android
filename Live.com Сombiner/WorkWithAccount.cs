@@ -16,10 +16,6 @@ namespace Live.com_Сombiner
         /// </summary>
         public static int minPause, maxPause, countRequest, minPauseRegistration, maxPauseRegistration;
         /// <summary>
-        /// Режим работы
-        /// </summary>
-        public static string OperatingMode;
-        /// <summary>
         /// Перечисление статусов
         /// </summary>
         public enum Status
@@ -31,7 +27,7 @@ namespace Live.com_Сombiner
             NumberError,
             InvalidEmail,
             BadProxy,
-            Block24h
+            Captcha
         }
         /// <summary>
         /// Количество аккаунтов для регистрации
@@ -52,8 +48,7 @@ namespace Live.com_Сombiner
             try
             {
                 SaveData.WriteToLog(null, "Начал свою работу");
-                if (OperatingMode == "Регистратор")
-                    RegistrationAccount();
+                RegistrationAccount();
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }
         }
@@ -115,18 +110,15 @@ namespace Live.com_Сombiner
                                 SaveData.WriteToLog($"{Number.Number}:{Password}", "Аккаунт не зарегестрирован");
                                 SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.InvalidRegistrationList);
                                 break;
-                            case Status.Block24h:
-                                SaveData.Block24h++;
-                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Аккаунт не зарегестрирован, 24 часа рассматривают аккаунт.");
-                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.Block24hList);
+                            case Status.Captcha:
+                                SaveData.captcha++;
+                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Попали на каптчу");
+                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.CaptchaList);
                                 break;
                             default:
                                 SaveData.UnknownError++;
                                 SaveData.WriteToLog($"{Number.Number}:{Password}", "Неизвестная ошибка.");
-                                //Number = GetSmsActivate.GetNumber();
-                                //UserAgent = GetUserAgent.get();
-                                //proxyClient = GetProxy.get();
-                                //continue;
+                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.UnknownErrorList);
                                 break;
                         }
                         break;
@@ -1109,330 +1101,8 @@ namespace Live.com_Сombiner
                     }
                     if (Response.Contains("challenge_required"))   // Капча
                     {
-                        SaveData.captcha++;
-                        SaveData.WriteToLog($"{Number.Number}:{password}", "Попали на капчу");
-
-                        #region Генерируем данные для запросов
-                        string challenge_url = Response.BetweenOrEmpty("api_path\":\"", "\""),
-                            step_name = Response.BetweenOrEmpty("step_name\\\": \\\"", "\\\""),
-                            nonce_code = Response.BetweenOrEmpty("nonce_code\\\": \\\"", "\\\""),
-                            user_id = Response.BetweenOrEmpty("user_id\\\": ", ","),
-                            is_stateless = Response.BetweenOrEmpty("is_stateless\\\": ", "}"),
-                            challenge_context = $"{{\"step_name\": \"{step_name}\", \"nonce_code\": \"{nonce_code}\", \"user_id\": {user_id}, \"is_stateless\": {is_stateless}}}";
-                        #endregion
-
-                        #region Отправляем Get запрос на страницу с капчей
-                        request.AddHeader("X-IG-App-Locale", X_IG_App_Locale);
-                        request.AddHeader("X-IG-Device-Locale", X_IG_Device_Locale);
-                        request.AddHeader("X-IG-Mapped-Locale", X_IG_Mapped_Locale);
-                        request.AddHeader("X-Pigeon-Session-Id", XPigeonSessionId);
-                        request.AddHeader("X-Pigeon-Rawclienttime", JSTime(false, true));
-                        request.AddHeader("X-IG-Bandwidth-Speed-KBPS", rand.Next(7000, 10000).ToString());
-                        request.AddHeader("X-IG-Bandwidth-TotalBytes-B", rand.Next(500000, 1000000).ToString());
-                        request.AddHeader("X-IG-Bandwidth-TotalTime-MS", rand.Next(50, 150).ToString());
-                        request.AddHeader("X-Bloks-Version-Id", X_Bloks_Version_Id);
-                        request.AddHeader("X-IG-WWW-Claim", "0");
-                        request.AddHeader("X-Bloks-Is-Layout-RTL", "false");
-                        request.AddHeader("X-Bloks-Is-Panorama-Enabled", "true");
-                        request.AddHeader("X-IG-Device-ID", XIGDeviceID);
-                        request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
-                        request.AddHeader("X-IG-Android-ID", XIGAndroidID);
-                        request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                        request.AddHeader("X-IG-Connection-Type", "WIFI");
-                        request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                        request.AddHeader("X-IG-App-ID", "567067343352427");
-                        request.AddHeader("X-Mid", xmid);
-                        request.AddHeader("Ig-Intended-User-Id", "0");
-                        request.AddHeader("X-FB-HTTP-Engine", "Liger");
-                        request.AddHeader("X-FB-Client-IP", "True");
-                        request.AddHeader("X-FB-Server-Cluster", "True");
-                        request.KeepAlive = false;
-
-                        #region Порядок Хэдеров
-                        request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "X-IG-App-Locale",
-                    "X-IG-Device-Locale",
-                    "X-IG-Mapped-Locale",
-                    "X-Pigeon-Session-Id",
-                    "X-Pigeon-Rawclienttime",
-                    "X-IG-Bandwidth-Speed-KBPS",
-                    "X-IG-Bandwidth-TotalBytes-B",
-                    "X-IG-Bandwidth-TotalTime-MS",
-                    "X-Bloks-Version-Id",
-                    "X-IG-WWW-Claim",
-                    "X-Bloks-Is-Layout-RTL",
-                    "X-Bloks-Is-Panorama-Enabled",
-                    "X-IG-Device-ID",
-                    "X-Ig-Family-Device-Id",
-                    "X-IG-Android-ID",
-                    "X-Ig-Timezone-Offset",
-                    "X-IG-Connection-Type",
-                    "X-IG-Capabilities",
-                    "X-IG-App-ID",
-                    "User-Agent",
-                    "Accept-Language",
-                    "X-Mid",
-                    "Ig-Intended-User-Id",
-                    "Content-Type",
-                    "Content-Length",
-                    "Accept-Encoding",
-                    "X-FB-HTTP-Engine",
-                    "X-FB-Client-IP",
-                    "X-FB-Server-Cluster",
-                    "Connection"
-                    });
-                        #endregion
-
-                        UrlParams.Clear();
-                        UrlParams["guid"] = XIGDeviceID;
-                        UrlParams["device_id"] = XIGAndroidID;
-                        UrlParams["challenge_context"] = challenge_context;
-
-                        Thread.Sleep(rand.Next(minPause, maxPause));
-                        Response = request.Get("https://i.instagram.com/api/v1" + challenge_url, UrlParams).ToString();
-
-                        csrf_token = request.Cookies.GetCookie("csrftoken", "https://i.instagram.com/api/v1" + challenge_url).Value.ToString();
-                        #endregion
-
-                        #region Отправляем Get запрос на браузерную страницу с капчей и парсим данные
-                        request.AddHeader("Upgrade-Insecure-Requests", "1");
-                        request.AddHeader("User-Agent", userAgent);
-                        request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
-                        request.AddHeader("X-Requested-With", "com.instagram.android");
-                        request.KeepAlive = false;
-
-                        #region Порядок Хэдеров
-                        request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "Upgrade-Insecure-Requests",
-                    "User-Agent",
-                    "Accept",
-                    "Accept-Encoding",
-                    "Accept-Language",
-                    "X-Requested-With",
-                    "Connection"
-                    });
-                        #endregion
-
-                        Thread.Sleep(rand.Next(minPause, maxPause));
-                        Response = request.Get("https://i.instagram.com" + challenge_url).ToString();
-
-                        csrf_token = request.Cookies.GetCookie("csrftoken", "https://i.instagram.com" + challenge_url).Value.ToString();
-
-                        string X_Instagram_Ajax = Response.BetweenOrEmpty("rollout_hash\":\"", "\""),
-                            ConsumerLibCommons = Response.BetweenOrEmpty("ConsumerLibCommons.js/", "\"");
-                        #endregion
-
-                        #region Делаем Get запрос на библиотеку и парсим данные
-                        request.AddHeader("Origin", "https://i.instagram.com");
-                        request.AddHeader("User-Agent", userAgent);
-                        request.AddHeader("Accept", "*/*");
-                        request.AddHeader("Referer", "https://i.instagram.com" + challenge_url);
-                        request.AddHeader("X-Requested-With", "com.instagram.android");
-                        request.KeepAlive = false;
-
-                        #region Порядок Хэдеров
-                        request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "Origin",
-                    "User-Agent",
-                    "Accept",
-                    "Referer",
-                    "Accept-Encoding",
-                    "Accept-Language",
-                    "X-Requested-With",
-                    "Connection"
-                    });
-                        #endregion
-
-                        Thread.Sleep(rand.Next(minPause, maxPause));
-                        Response = request.Get("https://i.instagram.com/static/bundles/metro/ConsumerLibCommons.js/" + ConsumerLibCommons).ToString();
-
-                        string X_Asbd_Id = Response.BetweenOrEmpty("e.ASBD_ID='", "'"),
-                            X_Ig_App_Id = Response.BetweenOrEmpty("e.instagramWebFBAppId='", "'");
-                        #endregion
-
-                        #region Отправляем Post запрос с решенной капчей
-                        request.AddHeader("Origin", "https://i.instagram.com");
-                        request.AddHeader("X-Ig-Www-Claim", "0");
-                        request.AddHeader("X-Instagram-Ajax", X_Instagram_Ajax);
-                        request.AddHeader("Accept", "*/*");
-                        request.AddHeader("X-Requested-With", "XMLHttpRequest");
-                        request.AddHeader("X-Asbd-Id", X_Asbd_Id);
-                        request.AddHeader("User-Agent", userAgent);
-                        request.AddHeader("X-Csrftoken", csrf_token);
-                        request.AddHeader("X-Ig-App-Id", X_Ig_App_Id);
-                        request.AddHeader("Referer", "https://i.instagram.com" + challenge_url);
-                        request.KeepAlive = false;
-
-                        #region Порядок Хэдеров
-                        request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "Content-Length",
-                    "Origin",
-                    "X-Ig-Www-Claim",
-                    "X-Instagram-Ajax",
-                    "Content-Type",
-                    "Accept",
-                    "X-Requested-With",
-                    "X-Asbd-Id",
-                    "User-Agent",
-                    "X-Csrftoken",
-                    "X-Ig-App-Id",
-                    "Referer",
-                    "Accept-Encoding",
-                    "Accept-Language",
-                    "Connection"
-                    });
-                        #endregion
-
-                        json = $"g-recaptcha-response={System.Web.HttpUtility.UrlEncode(GetCaptcha.GetRecaptcha("https://www.fbsbx.com/", "6Lc9qjcUAAAAADTnJq5kJMjN9aD1lxpRLMnCS2TR", $"{Number.Number}:{password}"))}&challenge_context={System.Web.HttpUtility.UrlEncode(challenge_context)}";
-
-                        Thread.Sleep(rand.Next(minPause, maxPause));
-                        Response = request.Post("https://i.instagram.com" + challenge_url, json, "application/x-www-form-urlencoded").ToString();
-
-                        csrf_token = request.Cookies.GetCookie("csrftoken", "https://i.instagram.com" + challenge_url).Value.ToString();
-                        #endregion
-
-                        if (Response.Contains("account_created\":true"))
-                        {
-                            GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
-                            return (Status.True, userAgent, request.Cookies);      // Валидный аккаунт
-                        }
-                        if (Response.Contains("SubmitPhoneNumberForm"))       // Требует ввода номера после решения капчи
-                        {
-                            SaveData.WriteToLog($"{Number.Number}:{password}", "Попали на повторный ввод кода");
-
-                            #region Генерируем challenge_context_type_enum
-                            step_name = Response.BetweenOrEmpty("step_name\\\": \\\"", "\\\"");
-                            nonce_code = Response.BetweenOrEmpty("nonce_code\\\": \\\"", "\\\"");
-                            user_id = Response.BetweenOrEmpty("user_id\\\": ", ",");
-                            is_stateless = Response.BetweenOrEmpty("is_stateless\\\": ", ",");
-                            string challenge_type_enum = Response.BetweenOrEmpty("challenge_type_enum\\\": \\\"", "\\\"");
-                            string challenge_context_type_enum = $"{{\"step_name\": \"{step_name}\", \"nonce_code\": \"{nonce_code}\", \"user_id\": {user_id}, \"is_stateless\": {is_stateless}, \"challenge_type_enum\": \"{challenge_type_enum}\"}}";
-                            #endregion
-
-                            #region Отправляем Post запрос для принятия новой смс
-                            request.AddHeader("Origin", "https://i.instagram.com");
-                            request.AddHeader("X-Ig-Www-Claim", "0");
-                            request.AddHeader("X-Instagram-Ajax", X_Instagram_Ajax);
-                            request.AddHeader("Accept", "*/*");
-                            request.AddHeader("X-Requested-With", "XMLHttpRequest");
-                            request.AddHeader("X-Asbd-Id", X_Asbd_Id);
-                            request.AddHeader("User-Agent", userAgent);
-                            request.AddHeader("X-Csrftoken", csrf_token);
-                            request.AddHeader("X-Ig-App-Id", X_Ig_App_Id);
-                            request.AddHeader("Referer", "https://i.instagram.com" + challenge_url);
-                            request.KeepAlive = false;
-
-                            #region Порядок Хэдеров
-                            request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "Content-Length",
-                    "Origin",
-                    "X-Ig-Www-Claim",
-                    "X-Instagram-Ajax",
-                    "Content-Type",
-                    "Accept",
-                    "X-Requested-With",
-                    "X-Asbd-Id",
-                    "User-Agen",
-                    "X-Csrftoken",
-                    "X-Ig-App-Id",
-                    "Referer",
-                    "Accept-Encoding",
-                    "Accept-Language",
-                    "Connection"
-                    });
-                            #endregion
-
-                            json = $"phone_number={System.Web.HttpUtility.UrlEncode("+" + Number.Number)}&challenge_context={System.Web.HttpUtility.UrlEncode(challenge_context_type_enum)}";
-
-                            Thread.Sleep(rand.Next(minPause, maxPause));
-                            Response = request.Post("https://i.instagram.com" + challenge_url, json, "application/x-www-form-urlencoded").ToString();
-
-                            csrf_token = request.Cookies.GetCookie("csrftoken", "https://i.instagram.com" + challenge_url).Value.ToString();
-                            #endregion
-
-                            #region принимаем смс
-                            GetSmsActivate.Status(Number.Tzid, 3);      // Запросили повторно принятие смс
-                            code = GetSmsActivate.GetCode(Number.Tzid);
-                            if (code == null)
-                            {
-                                SaveData.WriteToLog($"{Number.Number}:{password}", "Повторная смс не пришла");
-                                return (Status.False, null, null);
-                            }
-                            #endregion
-
-                            #region Отправляем Post запрос с повторным кодом
-                            request.AddHeader("Origin", "https://i.instagram.com");
-                            request.AddHeader("X-Ig-Www-Claim", "0");
-                            request.AddHeader("X-Instagram-Ajax", X_Instagram_Ajax);
-                            request.AddHeader("Accept", "*/*");
-                            request.AddHeader("X-Requested-With", "XMLHttpRequest");
-                            request.AddHeader("X-Asbd-Id", X_Asbd_Id);
-                            request.AddHeader("User-Agent", userAgent);
-                            request.AddHeader("X-Csrftoken", csrf_token);
-                            request.AddHeader("X-Ig-App-Id", X_Ig_App_Id);
-                            request.AddHeader("Referer", "https://i.instagram.com" + challenge_url);
-                            request.KeepAlive = false;
-
-                            #region Порядок Хэдеров
-                            request.AddHeadersOrder(new List<string>()
-                    {
-                    "Host",
-                    "Cookie",
-                    "Content-Length",
-                    "Origin",
-                    "X-Ig-Www-Claim",
-                    "X-Instagram-Ajax",
-                    "Content-Type",
-                    "Accept",
-                    "X-Requested-With",
-                    "X-Asbd-Id",
-                    "User-Agent",
-                    "X-Csrftoken",
-                    "X-Ig-App-Id",
-                    "Referer",
-                    "Accept-Encoding",
-                    "Accept-Language",
-                    "Connection"
-                    });
-                            #endregion
-
-                            json = $"security_code={System.Web.HttpUtility.UrlEncode(code)}&challenge_context={System.Web.HttpUtility.UrlEncode(challenge_context_type_enum)}";
-
-                            Thread.Sleep(rand.Next(minPause, maxPause));
-                            Response = request.Post("https://i.instagram.com" + challenge_url, json, "application/x-www-form-urlencoded").ToString();
-
-                            csrf_token = request.Cookies.GetCookie("csrftoken", "https://i.instagram.com" + challenge_url).Value.ToString();
-                            #endregion
-
-                            GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
-
-                            if (Response.Contains("account_created\":true"))
-                                return (Status.True, userAgent, request.Cookies);      // Валидный аккаунт
-                            if (Response.Contains("UFACBlockingForm"))
-                                return (Status.Block24h, userAgent, request.Cookies); // Блок на 24 часа
-                            else
-                                return (Status.False, userAgent, request.Cookies);    // Не удалось зарегестрировать
-                        }
-                        else
-                        {
-                            GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
-                            return (Status.False, userAgent, request.Cookies);    // Не удалось зарегестрировать
-                        }
+                        GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
+                        return (Status.Captcha, userAgent, request.Cookies);    // Каптча
                     }
                     else
                     {
