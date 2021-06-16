@@ -39,10 +39,6 @@ namespace Live.com_Сombiner
                     thread.Name = $"Поток {i}";
                     Threads.Add(thread);
                     Threads[i].Start();
-
-                    int pause = rand.Next(5000, 10000);
-                    SaveData.WriteToLog("SYSTEM", $"Делаем паузу на {pause/1000} секунд, между созданием потоков");
-                    Thread.Sleep(pause); // Пауза между созданием потоков
                 }
                 SaveData.WriteToLog("SYSTEM", $"Создано {Threads.Count.ToString()} потоков");
                 new Thread(() => CheckCompletion()) { IsBackground = true }.Start();
