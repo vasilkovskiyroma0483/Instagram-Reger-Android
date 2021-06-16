@@ -2,22 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using Leaf.xNet;
-
-using MailKit;
-using MailKit.Net.Imap;
-using MailKit.Search;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Net;
 
 namespace Live.com_Сombiner
 {
@@ -109,10 +96,6 @@ namespace Live.com_Сombiner
                     Directory.CreateDirectory("in");
                 if (!Directory.Exists("out/regger"))
                     Directory.CreateDirectory("out/regger");
-                if (!Directory.Exists("out/accounts"))
-                    Directory.CreateDirectory("out/accounts");
-                if (!Directory.Exists("out/spamer"))
-                    Directory.CreateDirectory("out/spamer");
                 if (!Directory.Exists("out/cookies"))
                     Directory.CreateDirectory("out/cookies");
 
