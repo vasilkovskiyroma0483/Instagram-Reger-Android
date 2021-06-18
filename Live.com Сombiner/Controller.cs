@@ -30,7 +30,7 @@ namespace Live.com_Сombiner
         {
             try
             {
-                SaveData.WriteToLog("SYSTEM", $"Начало работы программы. Режим {WorkWithAccount.OperatingMode}");
+                SaveData.WriteToLog("SYSTEM", $"Начало работы программы.");
                 Threads.Clear();
                 SaveData.WriteToLog("SYSTEM", $"Создаем потоки");
                 for (int i = 0; i < countThread; i++)

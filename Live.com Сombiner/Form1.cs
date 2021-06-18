@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using Leaf.xNet;
 
 namespace Live.com_Сombiner
 {
@@ -29,7 +29,7 @@ namespace Live.com_Сombiner
             CountRequestNumeric.Value = Properties.Settings.Default.CountRequestNumeric;
             CountThreadNumeric.Value = Properties.Settings.Default.CountThreadNumeric;
             DisableLogBox.Checked = Properties.Settings.Default.DisableLogBox;
-            NameSurnameBox.Text = Properties.Settings.Default.NameSurnameBox;
+            NameBox.Text = Properties.Settings.Default.NameSurnameBox;
             PasswordFileBox.Text = Properties.Settings.Default.PasswordFileBox;
             PasswordGenerateCheckBox.Checked = Properties.Settings.Default.PasswordGenerateCheckBox;
             CountAccountNumeric.Value = Properties.Settings.Default.CountAccountNumeric;
@@ -51,7 +51,7 @@ namespace Live.com_Сombiner
                 Properties.Settings.Default.CountRequestNumeric = (int)CountRequestNumeric.Value;
                 Properties.Settings.Default.CountThreadNumeric = (int)CountThreadNumeric.Value;
                 Properties.Settings.Default.DisableLogBox = DisableLogBox.Checked;
-                Properties.Settings.Default.NameSurnameBox = NameSurnameBox.Text;
+                Properties.Settings.Default.NameSurnameBox = NameBox.Text;
                 Properties.Settings.Default.PasswordFileBox = PasswordFileBox.Text;
                 Properties.Settings.Default.PasswordGenerateCheckBox = PasswordGenerateCheckBox.Checked;
                 Properties.Settings.Default.CountAccountNumeric = (int)CountAccountNumeric.Value;
@@ -116,7 +116,7 @@ namespace Live.com_Сombiner
                     return false;
                 if (!GetProxy.FillInProxy(ProxyFilePathBox.Text, ProxySourceBox.Text, ProxyModeBox.Text, TypeOfProxyBox.Text, ProxyCheckLinkBox.Text))
                     return false;
-                if (!GetNameSurnamePassword.FillInData(NameSurnameBox.Text, PasswordGenerateCheckBox.Checked, PasswordFileBox.Text))
+                if (!GetNameSurnamePassword.FillInData(NameBox.Text, SurnameBox.Text, PasswordGenerateCheckBox.Checked, PasswordFileBox.Text))
                     return false;
 
                 // Очистки лога, и запуск таймера.
@@ -150,16 +150,7 @@ namespace Live.com_Сombiner
         {
             try
             {
-                LoadFromFile(NameSurnameBox);
-            }
-            catch (Exception exception) { MessageBox.Show(exception.Message); }
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                LoadFromFile(EmailBox);
+                LoadFromFile(NameBox);
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }
         }
@@ -283,5 +274,14 @@ namespace Live.com_Сombiner
             catch (Exception exception) { MessageBox.Show(exception.Message); }
         }
         #endregion
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            using (var request = new HttpRequest())
+            {
+                string s = request.Get("http://www.geoplugin.net/json.gp").ToString().BetweenOrEmpty("geoplugin_countryName\":\"","\"");
+                MessageBox.Show(s);
+            }
+        }
     }
 }

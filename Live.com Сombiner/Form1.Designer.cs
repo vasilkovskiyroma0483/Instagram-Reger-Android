@@ -40,7 +40,6 @@ namespace Live.com_Сombiner
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.DisableLogBox = new System.Windows.Forms.CheckBox();
             this.LogBox = new System.Windows.Forms.RichTextBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.guna2GroupBox2 = new Guna.UI2.WinForms.Guna2GroupBox();
             this.ProxyCheckLinkBox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -67,9 +66,6 @@ namespace Live.com_Сombiner
             this.guna2HtmlLabel11 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel10 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2GroupBox4 = new Guna.UI2.WinForms.Guna2GroupBox();
-            this.EmailBox = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2HtmlLabel21 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.button5 = new System.Windows.Forms.Button();
             this.MaxPauseRegistrationNumeric = new Guna.UI2.WinForms.Guna2NumericUpDown();
             this.guna2HtmlLabel18 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.MinPauseRegistrationNumeric = new Guna.UI2.WinForms.Guna2NumericUpDown();
@@ -80,7 +76,7 @@ namespace Live.com_Сombiner
             this.PasswordGenerateCheckBox = new Guna.UI2.WinForms.Guna2CheckBox();
             this.PasswordFileBox = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel16 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.NameSurnameBox = new Guna.UI2.WinForms.Guna2TextBox();
+            this.NameBox = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel15 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2GroupBox5 = new Guna.UI2.WinForms.Guna2GroupBox();
             this.CaptchLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -89,6 +85,9 @@ namespace Live.com_Сombiner
             this.InvalidRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.GoodRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.UsedRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.SurnameBox = new Guna.UI2.WinForms.Guna2TextBox();
+            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.groupBox4.SuspendLayout();
             this.guna2GroupBox2.SuspendLayout();
             this.guna2GroupBox3.SuspendLayout();
@@ -105,7 +104,7 @@ namespace Live.com_Сombiner
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(24, 1106);
+            this.button1.Location = new System.Drawing.Point(24, 1056);
             this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(248, 76);
@@ -116,7 +115,7 @@ namespace Live.com_Сombiner
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(340, 1106);
+            this.button2.Location = new System.Drawing.Point(340, 1056);
             this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(248, 76);
@@ -150,7 +149,7 @@ namespace Live.com_Сombiner
             // StopWatchLabel
             // 
             this.StopWatchLabel.AutoSize = true;
-            this.StopWatchLabel.Location = new System.Drawing.Point(18, 1199);
+            this.StopWatchLabel.Location = new System.Drawing.Point(18, 1149);
             this.StopWatchLabel.Name = "StopWatchLabel";
             this.StopWatchLabel.Size = new System.Drawing.Size(393, 32);
             this.StopWatchLabel.TabIndex = 43;
@@ -191,20 +190,9 @@ namespace Live.com_Сombiner
             this.LogBox.TabIndex = 0;
             this.LogBox.Text = "";
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(496, 214);
-            this.button4.Margin = new System.Windows.Forms.Padding(6);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(56, 45);
-            this.button4.TabIndex = 52;
-            this.button4.Text = "+";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(496, 310);
+            this.button3.Location = new System.Drawing.Point(496, 280);
             this.button3.Margin = new System.Windows.Forms.Padding(6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(56, 45);
@@ -670,9 +658,8 @@ namespace Live.com_Сombiner
             // 
             // guna2GroupBox4
             // 
-            this.guna2GroupBox4.Controls.Add(this.EmailBox);
-            this.guna2GroupBox4.Controls.Add(this.guna2HtmlLabel21);
-            this.guna2GroupBox4.Controls.Add(this.button5);
+            this.guna2GroupBox4.Controls.Add(this.SurnameBox);
+            this.guna2GroupBox4.Controls.Add(this.guna2HtmlLabel1);
             this.guna2GroupBox4.Controls.Add(this.MaxPauseRegistrationNumeric);
             this.guna2GroupBox4.Controls.Add(this.guna2HtmlLabel18);
             this.guna2GroupBox4.Controls.Add(this.MinPauseRegistrationNumeric);
@@ -683,63 +670,17 @@ namespace Live.com_Сombiner
             this.guna2GroupBox4.Controls.Add(this.PasswordGenerateCheckBox);
             this.guna2GroupBox4.Controls.Add(this.PasswordFileBox);
             this.guna2GroupBox4.Controls.Add(this.guna2HtmlLabel16);
-            this.guna2GroupBox4.Controls.Add(this.NameSurnameBox);
+            this.guna2GroupBox4.Controls.Add(this.NameBox);
             this.guna2GroupBox4.Controls.Add(this.guna2HtmlLabel15);
-            this.guna2GroupBox4.Controls.Add(this.button4);
             this.guna2GroupBox4.Controls.Add(this.button3);
             this.guna2GroupBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2GroupBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
             this.guna2GroupBox4.Location = new System.Drawing.Point(24, 31);
             this.guna2GroupBox4.Name = "guna2GroupBox4";
             this.guna2GroupBox4.ShadowDecoration.Parent = this.guna2GroupBox4;
-            this.guna2GroupBox4.Size = new System.Drawing.Size(564, 711);
+            this.guna2GroupBox4.Size = new System.Drawing.Size(564, 657);
             this.guna2GroupBox4.TabIndex = 65;
             this.guna2GroupBox4.Text = "Регистрация аккаунтов";
-            // 
-            // EmailBox
-            // 
-            this.EmailBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.EmailBox.DefaultText = "in\\Email.txt";
-            this.EmailBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.EmailBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.EmailBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.EmailBox.DisabledState.Parent = this.EmailBox;
-            this.EmailBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.EmailBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.EmailBox.FocusedState.Parent = this.EmailBox;
-            this.EmailBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.EmailBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.EmailBox.HoverState.Parent = this.EmailBox;
-            this.EmailBox.Location = new System.Drawing.Point(26, 115);
-            this.EmailBox.Name = "EmailBox";
-            this.EmailBox.PasswordChar = '\0';
-            this.EmailBox.PlaceholderText = "";
-            this.EmailBox.SelectedText = "";
-            this.EmailBox.SelectionStart = 12;
-            this.EmailBox.ShadowDecoration.Parent = this.EmailBox;
-            this.EmailBox.Size = new System.Drawing.Size(439, 36);
-            this.EmailBox.TabIndex = 60;
-            // 
-            // guna2HtmlLabel21
-            // 
-            this.guna2HtmlLabel21.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel21.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel21.Location = new System.Drawing.Point(26, 69);
-            this.guna2HtmlLabel21.Name = "guna2HtmlLabel21";
-            this.guna2HtmlLabel21.Size = new System.Drawing.Size(161, 39);
-            this.guna2HtmlLabel21.TabIndex = 59;
-            this.guna2HtmlLabel21.Text = "Список Почт";
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(496, 115);
-            this.button5.Margin = new System.Windows.Forms.Padding(6);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(56, 45);
-            this.button5.TabIndex = 61;
-            this.button5.Text = "+";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // MaxPauseRegistrationNumeric
             // 
@@ -755,7 +696,7 @@ namespace Live.com_Сombiner
             this.MaxPauseRegistrationNumeric.FocusedState.Parent = this.MaxPauseRegistrationNumeric;
             this.MaxPauseRegistrationNumeric.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.MaxPauseRegistrationNumeric.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.MaxPauseRegistrationNumeric.Location = new System.Drawing.Point(121, 634);
+            this.MaxPauseRegistrationNumeric.Location = new System.Drawing.Point(121, 604);
             this.MaxPauseRegistrationNumeric.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -780,7 +721,7 @@ namespace Live.com_Сombiner
             // 
             this.guna2HtmlLabel18.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel18.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel18.Location = new System.Drawing.Point(28, 523);
+            this.guna2HtmlLabel18.Location = new System.Drawing.Point(28, 493);
             this.guna2HtmlLabel18.Name = "guna2HtmlLabel18";
             this.guna2HtmlLabel18.Size = new System.Drawing.Size(439, 39);
             this.guna2HtmlLabel18.TabIndex = 58;
@@ -800,7 +741,7 @@ namespace Live.com_Сombiner
             this.MinPauseRegistrationNumeric.FocusedState.Parent = this.MinPauseRegistrationNumeric;
             this.MinPauseRegistrationNumeric.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.MinPauseRegistrationNumeric.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.MinPauseRegistrationNumeric.Location = new System.Drawing.Point(121, 573);
+            this.MinPauseRegistrationNumeric.Location = new System.Drawing.Point(121, 543);
             this.MinPauseRegistrationNumeric.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -825,7 +766,7 @@ namespace Live.com_Сombiner
             // 
             this.guna2HtmlLabel19.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel19.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel19.Location = new System.Drawing.Point(28, 631);
+            this.guna2HtmlLabel19.Location = new System.Drawing.Point(28, 601);
             this.guna2HtmlLabel19.Name = "guna2HtmlLabel19";
             this.guna2HtmlLabel19.Size = new System.Drawing.Size(72, 39);
             this.guna2HtmlLabel19.TabIndex = 10;
@@ -845,7 +786,7 @@ namespace Live.com_Сombiner
             this.CountAccountNumeric.FocusedState.Parent = this.CountAccountNumeric;
             this.CountAccountNumeric.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CountAccountNumeric.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.CountAccountNumeric.Location = new System.Drawing.Point(26, 468);
+            this.CountAccountNumeric.Location = new System.Drawing.Point(26, 438);
             this.CountAccountNumeric.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -870,7 +811,7 @@ namespace Live.com_Сombiner
             // 
             this.guna2HtmlLabel20.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel20.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel20.Location = new System.Drawing.Point(28, 570);
+            this.guna2HtmlLabel20.Location = new System.Drawing.Point(28, 540);
             this.guna2HtmlLabel20.Name = "guna2HtmlLabel20";
             this.guna2HtmlLabel20.Size = new System.Drawing.Size(65, 39);
             this.guna2HtmlLabel20.TabIndex = 9;
@@ -880,7 +821,7 @@ namespace Live.com_Сombiner
             // 
             this.guna2HtmlLabel17.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel17.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel17.Location = new System.Drawing.Point(26, 423);
+            this.guna2HtmlLabel17.Location = new System.Drawing.Point(26, 393);
             this.guna2HtmlLabel17.Name = "guna2HtmlLabel17";
             this.guna2HtmlLabel17.Size = new System.Drawing.Size(221, 39);
             this.guna2HtmlLabel17.TabIndex = 57;
@@ -894,7 +835,7 @@ namespace Live.com_Сombiner
             this.PasswordGenerateCheckBox.CheckedState.BorderRadius = 0;
             this.PasswordGenerateCheckBox.CheckedState.BorderThickness = 0;
             this.PasswordGenerateCheckBox.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.PasswordGenerateCheckBox.Location = new System.Drawing.Point(26, 372);
+            this.PasswordGenerateCheckBox.Location = new System.Drawing.Point(26, 342);
             this.PasswordGenerateCheckBox.Name = "PasswordGenerateCheckBox";
             this.PasswordGenerateCheckBox.Size = new System.Drawing.Size(357, 45);
             this.PasswordGenerateCheckBox.TabIndex = 33;
@@ -919,7 +860,7 @@ namespace Live.com_Сombiner
             this.PasswordFileBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.PasswordFileBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.PasswordFileBox.HoverState.Parent = this.PasswordFileBox;
-            this.PasswordFileBox.Location = new System.Drawing.Point(26, 319);
+            this.PasswordFileBox.Location = new System.Drawing.Point(26, 289);
             this.PasswordFileBox.Name = "PasswordFileBox";
             this.PasswordFileBox.PasswordChar = '\0';
             this.PasswordFileBox.PlaceholderText = "";
@@ -933,45 +874,44 @@ namespace Live.com_Сombiner
             // 
             this.guna2HtmlLabel16.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel16.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel16.Location = new System.Drawing.Point(26, 273);
+            this.guna2HtmlLabel16.Location = new System.Drawing.Point(26, 243);
             this.guna2HtmlLabel16.Name = "guna2HtmlLabel16";
             this.guna2HtmlLabel16.Size = new System.Drawing.Size(206, 39);
             this.guna2HtmlLabel16.TabIndex = 53;
             this.guna2HtmlLabel16.Text = "Список паролей";
             // 
-            // NameSurnameBox
+            // NameBox
             // 
-            this.NameSurnameBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.NameSurnameBox.DefaultText = "in\\NameSurname.txt";
-            this.NameSurnameBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.NameSurnameBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.NameSurnameBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.NameSurnameBox.DisabledState.Parent = this.NameSurnameBox;
-            this.NameSurnameBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.NameSurnameBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.NameSurnameBox.FocusedState.Parent = this.NameSurnameBox;
-            this.NameSurnameBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.NameSurnameBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.NameSurnameBox.HoverState.Parent = this.NameSurnameBox;
-            this.NameSurnameBox.Location = new System.Drawing.Point(26, 214);
-            this.NameSurnameBox.Name = "NameSurnameBox";
-            this.NameSurnameBox.PasswordChar = '\0';
-            this.NameSurnameBox.PlaceholderText = "";
-            this.NameSurnameBox.SelectedText = "";
-            this.NameSurnameBox.SelectionStart = 18;
-            this.NameSurnameBox.ShadowDecoration.Parent = this.NameSurnameBox;
-            this.NameSurnameBox.Size = new System.Drawing.Size(439, 36);
-            this.NameSurnameBox.TabIndex = 1;
+            this.NameBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.NameBox.DefaultText = "in\\Name.txt";
+            this.NameBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.NameBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.NameBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.NameBox.DisabledState.Parent = this.NameBox;
+            this.NameBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.NameBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.NameBox.FocusedState.Parent = this.NameBox;
+            this.NameBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.NameBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.NameBox.HoverState.Parent = this.NameBox;
+            this.NameBox.Location = new System.Drawing.Point(26, 98);
+            this.NameBox.Name = "NameBox";
+            this.NameBox.PasswordChar = '\0';
+            this.NameBox.PlaceholderText = "";
+            this.NameBox.SelectedText = "";
+            this.NameBox.ShadowDecoration.Parent = this.NameBox;
+            this.NameBox.Size = new System.Drawing.Size(526, 36);
+            this.NameBox.TabIndex = 1;
             // 
             // guna2HtmlLabel15
             // 
             this.guna2HtmlLabel15.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel15.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel15.Location = new System.Drawing.Point(26, 168);
+            this.guna2HtmlLabel15.Location = new System.Drawing.Point(26, 52);
             this.guna2HtmlLabel15.Name = "guna2HtmlLabel15";
-            this.guna2HtmlLabel15.Size = new System.Drawing.Size(295, 39);
+            this.guna2HtmlLabel15.Size = new System.Drawing.Size(169, 39);
             this.guna2HtmlLabel15.TabIndex = 0;
-            this.guna2HtmlLabel15.Text = "Список Имен/Фамилий";
+            this.guna2HtmlLabel15.Text = "Список Имен";
             // 
             // guna2GroupBox5
             // 
@@ -983,7 +923,7 @@ namespace Live.com_Сombiner
             this.guna2GroupBox5.Controls.Add(this.UsedRegistrationLabel);
             this.guna2GroupBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2GroupBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.guna2GroupBox5.Location = new System.Drawing.Point(24, 761);
+            this.guna2GroupBox5.Location = new System.Drawing.Point(24, 710);
             this.guna2GroupBox5.Name = "guna2GroupBox5";
             this.guna2GroupBox5.ShadowDecoration.Parent = this.guna2GroupBox5;
             this.guna2GroupBox5.Size = new System.Drawing.Size(564, 337);
@@ -1044,11 +984,60 @@ namespace Live.com_Сombiner
             this.UsedRegistrationLabel.TabIndex = 0;
             this.UsedRegistrationLabel.Text = "Отработано: 0";
             // 
+            // guna2Button1
+            // 
+            this.guna2Button1.CheckedState.Parent = this.guna2Button1;
+            this.guna2Button1.CustomImages.Parent = this.guna2Button1;
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.HoverState.Parent = this.guna2Button1;
+            this.guna2Button1.Location = new System.Drawing.Point(715, 1100);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.ShadowDecoration.Parent = this.guna2Button1;
+            this.guna2Button1.Size = new System.Drawing.Size(180, 45);
+            this.guna2Button1.TabIndex = 67;
+            this.guna2Button1.Text = "guna2Button1";
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            // 
+            // SurnameBox
+            // 
+            this.SurnameBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.SurnameBox.DefaultText = "in\\Surname.txt";
+            this.SurnameBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.SurnameBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.SurnameBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SurnameBox.DisabledState.Parent = this.SurnameBox;
+            this.SurnameBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SurnameBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SurnameBox.FocusedState.Parent = this.SurnameBox;
+            this.SurnameBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.SurnameBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SurnameBox.HoverState.Parent = this.SurnameBox;
+            this.SurnameBox.Location = new System.Drawing.Point(26, 186);
+            this.SurnameBox.Name = "SurnameBox";
+            this.SurnameBox.PasswordChar = '\0';
+            this.SurnameBox.PlaceholderText = "";
+            this.SurnameBox.SelectedText = "";
+            this.SurnameBox.ShadowDecoration.Parent = this.SurnameBox;
+            this.SurnameBox.Size = new System.Drawing.Size(526, 36);
+            this.SurnameBox.TabIndex = 63;
+            // 
+            // guna2HtmlLabel1
+            // 
+            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(26, 140);
+            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(215, 39);
+            this.guna2HtmlLabel1.TabIndex = 62;
+            this.guna2HtmlLabel1.Text = "Список Фамилий";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2501, 1540);
+            this.ClientSize = new System.Drawing.Size(2501, 1435);
+            this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2GroupBox5);
             this.Controls.Add(this.guna2GroupBox4);
             this.Controls.Add(this.guna2GroupBox3);
@@ -1097,7 +1086,6 @@ namespace Live.com_Сombiner
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox DisableLogBox;
         private System.Windows.Forms.RichTextBox LogBox;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox2;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
@@ -1134,18 +1122,18 @@ namespace Live.com_Сombiner
         private Guna.UI2.WinForms.Guna2CheckBox PasswordGenerateCheckBox;
         private Guna.UI2.WinForms.Guna2TextBox PasswordFileBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel16;
-        private Guna.UI2.WinForms.Guna2TextBox NameSurnameBox;
+        private Guna.UI2.WinForms.Guna2TextBox NameBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel15;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox5;
         private Guna.UI2.WinForms.Guna2HtmlLabel InvalidRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel GoodRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel UsedRegistrationLabel;
-        private Guna.UI2.WinForms.Guna2TextBox EmailBox;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel21;
-        private System.Windows.Forms.Button button5;
         private Guna.UI2.WinForms.Guna2HtmlLabel Block24hLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel UnknownErrorLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel CaptchLabel;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2TextBox SurnameBox;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
     }
 }
 

@@ -14,7 +14,11 @@ namespace Live.com_Сombiner
         /// <summary>
         /// List с логинами
         /// </summary>
-        public static List<string> ListNameSurname = new List<string>();
+        public static List<string> ListName = new List<string>();
+        /// <summary>
+        /// List с логинами
+        /// </summary>
+        public static List<string> ListSurname = new List<string>();
         /// <summary>
         /// List с паролями
         /// </summary>
@@ -35,25 +39,28 @@ namespace Live.com_Сombiner
         /// <param name="PasswordGenerateCheckBox">True - генерировать пароли</param>
         /// <param name="PasswordFileBox">Путь к файлу с паролями</param>
         /// <returns></returns>
-        public static bool FillInData(string NameSurnameBox, bool PasswordGenerateCheckBox, string PasswordFileBox)
+        public static bool FillInData(string NameBox, string SurnameBox, bool PasswordGenerateCheckBox, string PasswordFileBox)
         {
             try
             {
-                ListNameSurname.Clear();
+                ListName.Clear();
+                ListSurname.Clear();
                 ListPassword.Clear();
+
                 #region Загружаем в List имена/фамилии
-                if (String.IsNullOrEmpty(NameSurnameBox))
+                if (String.IsNullOrEmpty(NameBox) || String.IsNullOrEmpty(SurnameBox))
                 {
                     MessageBox.Show("Введите путь к файлу с именами/фамилиями!");
                     return false;
                 }
-                if (!File.Exists(NameSurnameBox))
+                if (!File.Exists(NameBox) || !File.Exists(SurnameBox))
                 {
                     MessageBox.Show("Файла с именами/фамилиями не существует!");
                     return false;
                 }
-                ListNameSurname.AddRange(File.ReadAllLines(NameSurnameBox));
-                if (ListNameSurname.Count <= 0)
+                ListName.AddRange(File.ReadAllLines(NameBox));
+                ListSurname.AddRange(File.ReadAllLines(SurnameBox));
+                if (ListName.Count <= 0 || ListSurname.Count <= 0)
                 {
                     MessageBox.Show("Файл с именами/фамилиями пустой!");
                     return false;
@@ -114,7 +121,7 @@ namespace Live.com_Сombiner
                 }
                 #endregion
 
-                return (ListNameSurname[rand.Next(ListNameSurname.Count)], Password);
+                return ($"{ListName[rand.Next(ListName.Count)]} {ListSurname[rand.Next(ListSurname.Count)]}", Password);
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }
             return (null, null);
