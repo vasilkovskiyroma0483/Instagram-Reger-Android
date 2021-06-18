@@ -131,6 +131,7 @@ namespace Live.com_Сombiner
                 SaveData.InvalidRegistration = 0;
                 SaveData.UnknownError = 0;
                 SaveData.captcha = 0;
+                SaveData.NoSms = 0;
 
                 WorkWithAccount.minPause = (int)MinPauseNumeric.Value;
                 WorkWithAccount.maxPause = (int)MaxPauseNumeric.Value;
@@ -215,6 +216,7 @@ namespace Live.com_Сombiner
                 InvalidRegistrationLabel.Text = $"Не удачно: {SaveData.InvalidRegistration}";
                 UnknownErrorLabel.Text = $"Неизвестная ошибка: {SaveData.UnknownError}";
                 CaptchLabel.Text = $"Каптч: {SaveData.captcha}";
+                NoSmsLabel.Text = $"Не пришла смс: {SaveData.NoSms}";
 
                 // Запись аккаунтов.
                 lock (WorkWithAccount.LogOBJ)
@@ -230,6 +232,8 @@ namespace Live.com_Сombiner
                     SaveData.CaptchaList.Clear();
                     File.AppendAllLines("out/regger/unknown_error.txt", SaveData.UnknownErrorList);
                     SaveData.UnknownErrorList.Clear();
+                    File.AppendAllLines("out/regger/nosms.txt", SaveData.NoSmsList);
+                    SaveData.NoSmsList.Clear();
                 }
 
                 // Запись данных в Лог.
@@ -277,11 +281,7 @@ namespace Live.com_Сombiner
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            using (var request = new HttpRequest())
-            {
-                string s = request.Get("http://www.geoplugin.net/json.gp").ToString().BetweenOrEmpty("geoplugin_countryName\":\"","\"");
-                MessageBox.Show(s);
-            }
+
         }
     }
 }

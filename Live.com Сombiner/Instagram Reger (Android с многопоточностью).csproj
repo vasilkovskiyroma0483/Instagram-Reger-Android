@@ -46,9 +46,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Desktop\LIbrary\Leaf.xNet.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit, Version=2.11.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailKit.2.11.1\lib\net47\MailKit.dll</HintPath>
-    </Reference>
     <Reference Include="MimeKit, Version=2.11.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.2.11.0\lib\net47\MimeKit.dll</HintPath>
     </Reference>
@@ -88,8 +85,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GetCaptcha.cs" />
-    <Compile Include="GetEmail.cs" />
-    <Compile Include="GetMailKit.cs" />
+    <Compile Include="GetLocalization.cs" />
     <Compile Include="GetNameSurnamePassword.cs" />
     <Compile Include="GetProxy.cs" />
     <Compile Include="GetSmsActivate.cs" />

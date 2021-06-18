@@ -12,20 +12,28 @@ namespace Live.com_Сombiner
     class GetSmsActivate
     {
         public static string api_key = "60255Ab4610d452df4f6fc5Ae1164110";
-        public static (string tzid, string number) GetNumber()
+        public static (string tzid, string number) GetNumber(int countryCode)
         {
-            using (var request = new HttpRequest())
+            try
             {
-                request.UserAgent = Http.ChromeUserAgent();
-                request.EnableEncodingContent = true;
+                using (var request = new HttpRequest())
+                {
+                    request.UserAgent = Http.ChromeUserAgent();
+                    request.EnableEncodingContent = true;
 
-                string Response = request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=getNumber&service=ig&ref=&country=16").ToString();
+                    string Response = request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=getNumber&service=ig&ref=&country=" + countryCode).ToString();
 
-                string tzid = Response.BetweenOrEmpty(":", ":");
-                string number = Response.Replace(":" + Response.BetweenOrEmpty(":", ":"), "").AfterOrEmpty(":");
+                    if (Response.Contains("NO_NUMBERS"))
+                        return (null, null);
 
-                return (tzid, number);
+                    string tzid = Response.BetweenOrEmpty(":", ":");
+                    string number = Response.Replace(":" + Response.BetweenOrEmpty(":", ":"), "").AfterOrEmpty(":");
+
+                    return (tzid, number);
+                }
             }
+            catch { };
+            return (null, null);
         }
 
         public static string GetCode(string tzid)

@@ -23,11 +23,8 @@ namespace Live.com_Сombiner
             True,
             False,
             UnknownError,
-            BlockedAccount,
-            NumberError,
-            InvalidEmail,
-            BadProxy,
-            Captcha
+            Captcha,
+            NoSms
         }
         /// <summary>
         /// Количество аккаунтов для регистрации
@@ -39,7 +36,6 @@ namespace Live.com_Сombiner
         public static object LogOBJ = new object();
         static string mask = "01234567890aebcdf";
         public static List<string> Version = new List<string> { "187.0.0.32.120", "184.0.0.30.117", "177.0.0.30.119" };
-        public static List<string> Language = new List<string> { "en_GB" }; // "en_US", "en_GB"
         #endregion
 
         #region Выбор режима работы
@@ -59,10 +55,13 @@ namespace Live.com_Сombiner
         {
             try
             {
-                string Password, UserAgent, NameSurname;
-                string proxyLog = "";
+                string UserAgent = "",
+                        proxyLog = "";
                 (string Tzid, string Number) Number = (null, null);
+                (string NameSurname, string Password) DataForRegistration = (null, null);
+                (string CountryCode, string AcceptLanguage, int CountryNumber) Localization = (null, null, -1);
                 ProxyClient proxyClient;
+
                 while (true)
                 {
                     #region Выдача данных для регистрации
@@ -70,55 +69,71 @@ namespace Live.com_Сombiner
                     {
                         if (SaveData.UsedRegistration < CountAccountForRegistration)
                         {
-                            Number = GetSmsActivate.GetNumber();
-                            (string NameSurname, string Password) DataForRegistration = GetNameSurnamePassword.Get();
-                            if (String.IsNullOrEmpty(DataForRegistration.NameSurname) || String.IsNullOrEmpty(DataForRegistration.Password) || string.IsNullOrEmpty(Number.Number))
+                            DataForRegistration = GetNameSurnamePassword.Get();
+                            UserAgent = GetUserAgent.get();
+                            proxyClient = GetProxy.get();
+                            if (String.IsNullOrEmpty(DataForRegistration.NameSurname) || String.IsNullOrEmpty(DataForRegistration.Password))
                                 continue;
 
-                            NameSurname = DataForRegistration.NameSurname;
-                            Password = DataForRegistration.Password;
+                            Localization = GetLocalization.get(proxyClient);
+                            if (String.IsNullOrEmpty(Localization.CountryCode) || String.IsNullOrEmpty(Localization.AcceptLanguage) || Localization.CountryNumber < 0)
+                            {
+                                SaveData.WriteToLog($"SYSTEM", "Не смогли локализировать прокси. Меняем прокси");
+                                continue;
+                            }
+
+                            Number = GetSmsActivate.GetNumber(Localization.CountryNumber);
+                            if (String.IsNullOrEmpty(Number.Tzid) || String.IsNullOrEmpty(Number.Number))
+                            {
+                                SaveData.WriteToLog($"SYSTEM", "Нету номеров под прокси. Меняем прокси");
+                                continue;
+                            }
+
                             SaveData.UsedRegistration++;
-                            SaveData.SaveAccount($"{Number.Number}:{Password}", SaveData.ProcessedRegistrationList);
+                            SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}", SaveData.ProcessedRegistrationList);
                         }
                         else
                         {
                             break;
                         }
-                        UserAgent = GetUserAgent.get();
-                        proxyClient = GetProxy.get();
                         proxyLog = proxyClient == null ? "" : $";{proxyClient.ToString()}";
                     }
                     #endregion
 
                     #region Вызов метода регистрации, и проверка результата
-                    SaveData.WriteToLog($"{Number.Number}:{Password}{proxyLog}", "Попытка зарегестрировать аккаунт");
+                    SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Localization.CountryCode}", "Попытка зарегестрировать аккаунт");
 
                     (Status status, string userAgentOutput, CookieStorage cookie) Data;
                     for (int i = 0; i < countRequest; i++)
                     {
-                        Data = GoRegistrationAccount(NameSurname, Number, Password, UserAgent, proxyClient);
+                        Data = GoRegistrationAccount(DataForRegistration.NameSurname, Number, DataForRegistration.Password, UserAgent, proxyClient, Localization.AcceptLanguage);
                         switch (Data.status)
                         {
                             case Status.True:
                                 SaveData.GoodRegistration++;
-                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Аккаунт успешно зарегестрирован");
-                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.GoodRegistrationList);
+                                SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}", "Аккаунт успешно зарегестрирован");
+                                SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.GoodRegistrationList);
                                 Data.cookie.SaveToFile($"out/cookies/{Number.Number}.jar", true);
                                 break;
                             case Status.False:
                                 SaveData.InvalidRegistration++;
-                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Аккаунт не зарегестрирован");
-                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.InvalidRegistrationList);
+                                SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}", "Аккаунт не зарегестрирован");
+                                SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.InvalidRegistrationList);
                                 break;
                             case Status.Captcha:
                                 SaveData.captcha++;
-                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Попали на каптчу");
-                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.CaptchaList);
+                                SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}", "Попали на каптчу");
+                                SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.CaptchaList);
+                                break;
+                            case Status.NoSms:
+                                SaveData.NoSms++;
+                                SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}", "Не пришла смс");
+                                SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.NoSmsList);
                                 break;
                             default:
                                 SaveData.UnknownError++;
-                                SaveData.WriteToLog($"{Number.Number}:{Password}", "Неизвестная ошибка.");
-                                SaveData.SaveAccount($"{Number.Number}:{Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.UnknownErrorList);
+                                SaveData.WriteToLog($"{Number.Number}:{DataForRegistration.Password}", "Неизвестная ошибка.");
+                                SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}{proxyLog}|{Data.userAgentOutput}|{DateTime.Now.ToShortDateString()}", SaveData.UnknownErrorList);
                                 break;
                         }
                         break;
@@ -142,7 +157,7 @@ namespace Live.com_Сombiner
         /// <param name="UserAgent">UserAgent</param>
         /// <param name="proxyClient">Прокси</param>
         /// <returns></returns>
-        public static (Status status, string userAgentOutput, CookieStorage cookie) GoRegistrationAccount(string nameSurname, (string Tzid, string Number) Number, string password, string userAgent, ProxyClient proxyClient)
+        public static (Status status, string userAgentOutput, CookieStorage cookie) GoRegistrationAccount(string nameSurname, (string Tzid, string Number) Number, string password, string userAgent, ProxyClient proxyClient, string acceptLanguage)
         {
             try
             {
@@ -152,15 +167,14 @@ namespace Live.com_Сombiner
                     request.UseCookies = true;
                     request.Proxy = proxyClient;
 
-                    string language = Language[rand.Next(0, Language.Count)]; // Генерируем Accept-Language для регистрации
                     string version_apk = Version[rand.Next(0, Version.Count)];
-                    userAgent = userAgent.Replace("[VERSION]", version_apk).Replace("[Accept-Language]", language); // Готовим User Agent для регистрации.
+                    userAgent = userAgent.Replace("[VERSION]", version_apk).Replace("[Accept-Language]", acceptLanguage); // Готовим User Agent для регистрации.
 
                     request.UserAgent = "Instagram" + userAgent.AfterOrEmpty("Instagram"); // Вырезаем User Agent Для apk Instagram
-                    request["Accept-Language"] = language.Replace("_", "-");
-                    string X_IG_App_Locale = language,
-                        X_IG_Device_Locale = language,
-                        X_IG_Mapped_Locale = language;
+                    request["Accept-Language"] = acceptLanguage.Replace("_", "-");
+                    string X_IG_App_Locale = acceptLanguage,
+                        X_IG_Device_Locale = acceptLanguage,
+                        X_IG_Mapped_Locale = acceptLanguage;
 
                     var UrlParams = new RequestParams();
                     string day = rand.Next(1, 28).ToString(),
@@ -566,8 +580,9 @@ namespace Live.com_Сombiner
                     string code = GetSmsActivate.GetCode(Number.Tzid);
                     if (code == null)
                     {
+                        GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
                         SaveData.WriteToLog($"{Number.Number}:{password}", "Смс не пришла");
-                        return (Status.False, userAgent, request.Cookies);
+                        return (Status.NoSms, userAgent, request.Cookies);
                     }
                     #endregion
 

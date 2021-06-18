@@ -66,6 +66,8 @@ namespace Live.com_Сombiner
             this.guna2HtmlLabel11 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel10 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2GroupBox4 = new Guna.UI2.WinForms.Guna2GroupBox();
+            this.SurnameBox = new Guna.UI2.WinForms.Guna2TextBox();
+            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.MaxPauseRegistrationNumeric = new Guna.UI2.WinForms.Guna2NumericUpDown();
             this.guna2HtmlLabel18 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.MinPauseRegistrationNumeric = new Guna.UI2.WinForms.Guna2NumericUpDown();
@@ -81,13 +83,11 @@ namespace Live.com_Сombiner
             this.guna2GroupBox5 = new Guna.UI2.WinForms.Guna2GroupBox();
             this.CaptchLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.UnknownErrorLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.Block24hLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.InvalidRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.GoodRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.UsedRegistrationLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            this.SurnameBox = new Guna.UI2.WinForms.Guna2TextBox();
-            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.NoSmsLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.groupBox4.SuspendLayout();
             this.guna2GroupBox2.SuspendLayout();
             this.guna2GroupBox3.SuspendLayout();
@@ -682,6 +682,40 @@ namespace Live.com_Сombiner
             this.guna2GroupBox4.TabIndex = 65;
             this.guna2GroupBox4.Text = "Регистрация аккаунтов";
             // 
+            // SurnameBox
+            // 
+            this.SurnameBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.SurnameBox.DefaultText = "in\\Surname.txt";
+            this.SurnameBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.SurnameBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.SurnameBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SurnameBox.DisabledState.Parent = this.SurnameBox;
+            this.SurnameBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SurnameBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SurnameBox.FocusedState.Parent = this.SurnameBox;
+            this.SurnameBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.SurnameBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SurnameBox.HoverState.Parent = this.SurnameBox;
+            this.SurnameBox.Location = new System.Drawing.Point(26, 186);
+            this.SurnameBox.Name = "SurnameBox";
+            this.SurnameBox.PasswordChar = '\0';
+            this.SurnameBox.PlaceholderText = "";
+            this.SurnameBox.SelectedText = "";
+            this.SurnameBox.SelectionStart = 14;
+            this.SurnameBox.ShadowDecoration.Parent = this.SurnameBox;
+            this.SurnameBox.Size = new System.Drawing.Size(526, 36);
+            this.SurnameBox.TabIndex = 63;
+            // 
+            // guna2HtmlLabel1
+            // 
+            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(26, 140);
+            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(215, 39);
+            this.guna2HtmlLabel1.TabIndex = 62;
+            this.guna2HtmlLabel1.Text = "Список Фамилий";
+            // 
             // MaxPauseRegistrationNumeric
             // 
             this.MaxPauseRegistrationNumeric.BackColor = System.Drawing.Color.Transparent;
@@ -899,6 +933,7 @@ namespace Live.com_Сombiner
             this.NameBox.PasswordChar = '\0';
             this.NameBox.PlaceholderText = "";
             this.NameBox.SelectedText = "";
+            this.NameBox.SelectionStart = 11;
             this.NameBox.ShadowDecoration.Parent = this.NameBox;
             this.NameBox.Size = new System.Drawing.Size(526, 36);
             this.NameBox.TabIndex = 1;
@@ -915,9 +950,9 @@ namespace Live.com_Сombiner
             // 
             // guna2GroupBox5
             // 
+            this.guna2GroupBox5.Controls.Add(this.NoSmsLabel);
             this.guna2GroupBox5.Controls.Add(this.CaptchLabel);
             this.guna2GroupBox5.Controls.Add(this.UnknownErrorLabel);
-            this.guna2GroupBox5.Controls.Add(this.Block24hLabel);
             this.guna2GroupBox5.Controls.Add(this.InvalidRegistrationLabel);
             this.guna2GroupBox5.Controls.Add(this.GoodRegistrationLabel);
             this.guna2GroupBox5.Controls.Add(this.UsedRegistrationLabel);
@@ -933,7 +968,7 @@ namespace Live.com_Сombiner
             // CaptchLabel
             // 
             this.CaptchLabel.BackColor = System.Drawing.Color.Transparent;
-            this.CaptchLabel.Location = new System.Drawing.Point(28, 284);
+            this.CaptchLabel.Location = new System.Drawing.Point(26, 245);
             this.CaptchLabel.Name = "CaptchLabel";
             this.CaptchLabel.Size = new System.Drawing.Size(107, 33);
             this.CaptchLabel.TabIndex = 8;
@@ -942,20 +977,11 @@ namespace Live.com_Сombiner
             // UnknownErrorLabel
             // 
             this.UnknownErrorLabel.BackColor = System.Drawing.Color.Transparent;
-            this.UnknownErrorLabel.Location = new System.Drawing.Point(26, 235);
+            this.UnknownErrorLabel.Location = new System.Drawing.Point(26, 206);
             this.UnknownErrorLabel.Name = "UnknownErrorLabel";
             this.UnknownErrorLabel.Size = new System.Drawing.Size(300, 33);
             this.UnknownErrorLabel.TabIndex = 7;
             this.UnknownErrorLabel.Text = "Неизвестная ошибка: 0";
-            // 
-            // Block24hLabel
-            // 
-            this.Block24hLabel.BackColor = System.Drawing.Color.Transparent;
-            this.Block24hLabel.Location = new System.Drawing.Point(26, 194);
-            this.Block24hLabel.Name = "Block24hLabel";
-            this.Block24hLabel.Size = new System.Drawing.Size(197, 33);
-            this.Block24hLabel.TabIndex = 6;
-            this.Block24hLabel.Text = "Блок 24 часа: 0";
             // 
             // InvalidRegistrationLabel
             // 
@@ -999,38 +1025,14 @@ namespace Live.com_Сombiner
             this.guna2Button1.Text = "guna2Button1";
             this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
-            // SurnameBox
+            // NoSmsLabel
             // 
-            this.SurnameBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.SurnameBox.DefaultText = "in\\Surname.txt";
-            this.SurnameBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.SurnameBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.SurnameBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SurnameBox.DisabledState.Parent = this.SurnameBox;
-            this.SurnameBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SurnameBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SurnameBox.FocusedState.Parent = this.SurnameBox;
-            this.SurnameBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.SurnameBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SurnameBox.HoverState.Parent = this.SurnameBox;
-            this.SurnameBox.Location = new System.Drawing.Point(26, 186);
-            this.SurnameBox.Name = "SurnameBox";
-            this.SurnameBox.PasswordChar = '\0';
-            this.SurnameBox.PlaceholderText = "";
-            this.SurnameBox.SelectedText = "";
-            this.SurnameBox.ShadowDecoration.Parent = this.SurnameBox;
-            this.SurnameBox.Size = new System.Drawing.Size(526, 36);
-            this.SurnameBox.TabIndex = 63;
-            // 
-            // guna2HtmlLabel1
-            // 
-            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(26, 140);
-            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(215, 39);
-            this.guna2HtmlLabel1.TabIndex = 62;
-            this.guna2HtmlLabel1.Text = "Список Фамилий";
+            this.NoSmsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.NoSmsLabel.Location = new System.Drawing.Point(28, 286);
+            this.NoSmsLabel.Name = "NoSmsLabel";
+            this.NoSmsLabel.Size = new System.Drawing.Size(243, 43);
+            this.NoSmsLabel.TabIndex = 9;
+            this.NoSmsLabel.Text = "Не пришла смс: 0";
             // 
             // Form1
             // 
@@ -1128,12 +1130,12 @@ namespace Live.com_Сombiner
         private Guna.UI2.WinForms.Guna2HtmlLabel InvalidRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel GoodRegistrationLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel UsedRegistrationLabel;
-        private Guna.UI2.WinForms.Guna2HtmlLabel Block24hLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel UnknownErrorLabel;
         private Guna.UI2.WinForms.Guna2HtmlLabel CaptchLabel;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
         private Guna.UI2.WinForms.Guna2TextBox SurnameBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel NoSmsLabel;
     }
 }
 
