@@ -168,9 +168,8 @@ namespace Live.com_Сombiner
                     request.Proxy = proxyClient;
 
                     string version_apk = Version[rand.Next(0, Version.Count)];
-                    userAgent = userAgent.Replace("[VERSION]", version_apk).Replace("[Accept-Language]", acceptLanguage); // Готовим User Agent для регистрации.
 
-                    request.UserAgent = "Instagram" + userAgent.AfterOrEmpty("Instagram"); // Вырезаем User Agent Для apk Instagram
+                    request.UserAgent = userAgent.Replace("[VERSION]", version_apk).Replace("[Accept-Language]", acceptLanguage); // Готовим User Agent для регистрации.
                     request["Accept-Language"] = acceptLanguage.Replace("_", "-");
                     string X_IG_App_Locale = acceptLanguage,
                         X_IG_Device_Locale = acceptLanguage,
@@ -225,7 +224,8 @@ namespace Live.com_Сombiner
                     #endregion
 
                     string X_IG_Capabilities = "3brTvx0=", // 3brTvx8=
-                        sn_result = "API_ERROR:+null"; // API_ERROR: class X.9ob:7: 
+                        sn_result = "API_ERROR:+null", // API_ERROR: class X.9ob:7: 
+                        X_IG_App_ID = "567067343352427";
 
                     #region Делаем Get запрос на shared_data. Парсинг nonce, Device_Id, Ключи для шифрования.
                     request.AddHeader("X-IG-Bandwidth-Speed-KBPS", rand.Next(7000, 10000).ToString());
@@ -238,7 +238,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("IG-INTENDED-USER-ID", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
                     request.AddHeader("X-FB-Client-IP", "True");
@@ -277,6 +277,16 @@ namespace Live.com_Сombiner
                         key_id = Response.BetweenOrEmpty("key_id\":\"", "\""),
                         XIGDeviceID = Response.BetweenOrEmpty("device_id\":\"", "\""),
                         nonce = Response.BetweenOrEmpty("nonce\":\"", "\"");
+
+                    acceptLanguage = Response.BetweenOrEmpty("locale\":\"", "\""); // меняем Локализацию
+                    if (!acceptLanguage.Contains("null") || !acceptLanguage.Contains("unknown") || !String.IsNullOrEmpty(acceptLanguage))
+                    {
+                        request.UserAgent = userAgent.Replace("[VERSION]", version_apk).Replace("[Accept-Language]", acceptLanguage); // Готовим User Agent для регистрации.
+                        request["Accept-Language"] = acceptLanguage.Replace("_", "-");
+                        X_IG_App_Locale = acceptLanguage;
+                        X_IG_Device_Locale = acceptLanguage;
+                        X_IG_Mapped_Locale = acceptLanguage;
+                    }
                     #endregion
 
                     #region Генерируем sn_nonce, генерируем jazoest.
@@ -307,7 +317,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
                     request.AddHeader("X-FB-Client-IP", "True");
@@ -372,7 +382,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
                     request.AddHeader("X-FB-Client-IP", "True");
@@ -443,7 +453,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -499,6 +509,7 @@ namespace Live.com_Сombiner
 
                     if (!Response.Contains("status\":\"ok\""))
                     {
+                        GetSmsActivate.Status(Number.Tzid, 8);      // Завершили активацию номера
                         SaveData.WriteToLog($"{Number.Number}:{password}", "Номер не подошел");
                         return (Status.False, userAgent, request.Cookies);
                     }
@@ -522,7 +533,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -580,7 +591,7 @@ namespace Live.com_Сombiner
                     string code = GetSmsActivate.GetCode(Number.Tzid);
                     if (code == null)
                     {
-                        GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
+                        GetSmsActivate.Status(Number.Tzid, 8);      // Завершили активацию номера
                         SaveData.WriteToLog($"{Number.Number}:{password}", "Смс не пришла");
                         return (Status.NoSms, userAgent, request.Cookies);
                     }
@@ -605,7 +616,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -678,7 +689,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -757,7 +768,7 @@ namespace Live.com_Сombiner
                         request.AddHeader("X-Ig-Timezone-Offset", "10800");
                         request.AddHeader("X-IG-Connection-Type", "WIFI");
                         request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                        request.AddHeader("X-IG-App-ID", "567067343352427");
+                        request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                         request.AddHeader("X-Mid", xmid);
                         request.AddHeader("Ig-Intended-User-Id", "0");
                         request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -833,7 +844,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -906,7 +917,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -979,7 +990,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -1055,7 +1066,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
                     request.AddHeader("X-IG-Connection-Type", "WIFI");
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
-                    request.AddHeader("X-IG-App-ID", "567067343352427");
+                    request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
                     request.AddHeader("Ig-Intended-User-Id", "0");
                     request.AddHeader("X-FB-HTTP-Engine", "Liger");
@@ -1127,7 +1138,7 @@ namespace Live.com_Сombiner
                 }
             }
             catch (Exception exception) { SaveData.WriteToLog($"{Number.Number}:{password}", $"Ошибка: {exception.Message}"); };
-            GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
+            GetSmsActivate.Status(Number.Tzid, 8);      // Завершили активацию номера
             return (Status.UnknownError, userAgent, null);     // Неизвестная ошибка
         }
         #endregion

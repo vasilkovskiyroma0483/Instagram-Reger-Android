@@ -11,7 +11,7 @@ namespace Live.com_Сombiner
 {
     class GetSmsActivate
     {
-        public static string api_key = "60255Ab4610d452df4f6fc5Ae1164110";
+        public static string api_key = "5ccbA16427824e1347bA5751813f5497";
         public static (string tzid, string number) GetNumber(int countryCode)
         {
             try
