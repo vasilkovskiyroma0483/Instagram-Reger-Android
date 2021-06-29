@@ -27,6 +27,10 @@ namespace Live.com_Сombiner
         /// Чекбоксы на использование кастомных Почт/паролей или пользовательских
         /// </summary>
         public static bool GeneratePasswordCheck;
+        /// <summary>
+        /// Locker на выдачу данных для регистрации
+        /// </summary>
+        public static object lockerData = new object();
         public static Random rand = new Random((int)DateTime.Now.Ticks);
         #endregion
 
@@ -108,20 +112,23 @@ namespace Live.com_Сombiner
         {
             try
             {
-                string Password = "";
-
-                #region Подготовка к возврату пароля
-                if (GeneratePasswordCheck)
+                lock (lockerData)
                 {
-                    Password = GenerateRandomSymbol(8, 13, SourceLine);
-                }
-                else
-                {
-                    Password = ListPassword[rand.Next(ListPassword.Count)];
-                }
-                #endregion
+                    string Password = "";
 
-                return ($"{ListName[rand.Next(ListName.Count)]} {ListSurname[rand.Next(ListSurname.Count)]}", Password);
+                    #region Подготовка к возврату пароля
+                    if (GeneratePasswordCheck)
+                    {
+                        Password = GenerateRandomSymbol(8, 13, SourceLine);
+                    }
+                    else
+                    {
+                        Password = ListPassword[rand.Next(ListPassword.Count)];
+                    }
+                    #endregion
+
+                    return ($"{ListName[rand.Next(ListName.Count)]} {ListSurname[rand.Next(ListSurname.Count)]}", Password);
+                }
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }
             return (null, null);

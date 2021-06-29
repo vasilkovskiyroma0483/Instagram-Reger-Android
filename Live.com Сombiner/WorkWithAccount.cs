@@ -36,6 +36,7 @@ namespace Live.com_Сombiner
         public static object LogOBJ = new object();
         static string mask = "01234567890aebcdf";
         public static List<string> Version = new List<string> { "187.0.0.32.120", "184.0.0.30.117", "177.0.0.30.119" };
+        public static List<string> Connection_Type = new List<string> { "WIFI", "MOBILE(LTE)" };
         #endregion
 
         #region Выбор режима работы
@@ -65,30 +66,34 @@ namespace Live.com_Сombiner
                 while (true)
                 {
                     #region Выдача данных для регистрации
+                    proxyClient = GetProxy.get();
+
+                    if (GetProxy.ProxyMode == "Проверять")
+                        if (!GetProxy.CheckProxy(proxyClient))
+                            continue;
+
+                    DataForRegistration = GetNameSurnamePassword.Get();
+                    UserAgent = GetUserAgent.get();
+                    if (String.IsNullOrEmpty(DataForRegistration.NameSurname) || String.IsNullOrEmpty(DataForRegistration.Password))
+                        continue;
+
+                    Localization = GetLocalization.get(proxyClient);
+                    if (String.IsNullOrEmpty(Localization.CountryCode) || String.IsNullOrEmpty(Localization.AcceptLanguage) || Localization.CountryNumber < 0)
+                    {
+                        SaveData.WriteToLog($"SYSTEM", "Не смогли локализировать прокси. Меняем прокси");
+                        continue;
+                    }
+
                     lock (locker)
                     {
                         if (SaveData.UsedRegistration < CountAccountForRegistration)
                         {
-                            DataForRegistration = GetNameSurnamePassword.Get();
-                            UserAgent = GetUserAgent.get();
-                            proxyClient = GetProxy.get();
-                            if (String.IsNullOrEmpty(DataForRegistration.NameSurname) || String.IsNullOrEmpty(DataForRegistration.Password))
-                                continue;
-
-                            Localization = GetLocalization.get(proxyClient);
-                            if (String.IsNullOrEmpty(Localization.CountryCode) || String.IsNullOrEmpty(Localization.AcceptLanguage) || Localization.CountryNumber < 0)
-                            {
-                                SaveData.WriteToLog($"SYSTEM", "Не смогли локализировать прокси. Меняем прокси");
-                                continue;
-                            }
-
                             Number = GetSmsActivate.GetNumber(Localization.CountryNumber);
                             if (String.IsNullOrEmpty(Number.Tzid) || String.IsNullOrEmpty(Number.Number))
                             {
                                 SaveData.WriteToLog($"SYSTEM", "Нету номеров под прокси. Меняем прокси");
                                 continue;
                             }
-
                             SaveData.UsedRegistration++;
                             SaveData.SaveAccount($"{Number.Number}:{DataForRegistration.Password}", SaveData.ProcessedRegistrationList);
                         }
@@ -225,7 +230,8 @@ namespace Live.com_Сombiner
 
                     string X_IG_Capabilities = "3brTvx0=", // 3brTvx8=
                         sn_result = "API_ERROR:+null", // API_ERROR: class X.9ob:7: 
-                        X_IG_App_ID = "567067343352427";
+                        X_IG_App_ID = "567067343352427",
+                        X_IG_Connection_Type = Connection_Type[rand.Next(0, Connection_Type.Count)];
 
                     #region Делаем Get запрос на shared_data. Парсинг nonce, Device_Id, Ключи для шифрования.
                     request.AddHeader("X-IG-Bandwidth-Speed-KBPS", rand.Next(7000, 10000).ToString());
@@ -236,7 +242,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Bloks-Is-Layout-RTL", "false");
                     request.AddHeader("X-Bloks-Is-Panorama-Enabled", "true");
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("IG-INTENDED-USER-ID", "0");
@@ -315,7 +321,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("Ig-Intended-User-Id", "0");
@@ -380,7 +386,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("Ig-Intended-User-Id", "0");
@@ -451,7 +457,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -531,7 +537,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -614,7 +620,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -687,7 +693,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -766,7 +772,7 @@ namespace Live.com_Сombiner
                         request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                         request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                         request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                        request.AddHeader("X-IG-Connection-Type", "WIFI");
+                        request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                         request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                         request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                         request.AddHeader("X-Mid", xmid);
@@ -842,7 +848,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -915,7 +921,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -988,7 +994,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -1064,7 +1070,7 @@ namespace Live.com_Сombiner
                     request.AddHeader("X-Ig-Family-Device-Id", X_Ig_Family_Device_Id);
                     request.AddHeader("X-IG-Android-ID", XIGAndroidID);
                     request.AddHeader("X-Ig-Timezone-Offset", "10800");
-                    request.AddHeader("X-IG-Connection-Type", "WIFI");
+                    request.AddHeader("X-IG-Connection-Type", X_IG_Connection_Type);
                     request.AddHeader("X-IG-Capabilities", X_IG_Capabilities);
                     request.AddHeader("X-IG-App-ID", X_IG_App_ID);
                     request.AddHeader("X-Mid", xmid);
@@ -1138,7 +1144,7 @@ namespace Live.com_Сombiner
                 }
             }
             catch (Exception exception) { SaveData.WriteToLog($"{Number.Number}:{password}", $"Ошибка: {exception.Message}"); };
-            GetSmsActivate.Status(Number.Tzid, 8);      // Завершили активацию номера
+            GetSmsActivate.Status(Number.Tzid, 6);      // Завершили активацию номера
             return (Status.UnknownError, userAgent, null);     // Неизвестная ошибка
         }
         #endregion

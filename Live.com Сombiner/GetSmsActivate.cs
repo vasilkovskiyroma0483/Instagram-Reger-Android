@@ -11,7 +11,8 @@ namespace Live.com_Сombiner
 {
     class GetSmsActivate
     {
-        public static string api_key = "5ccbA16427824e1347bA5751813f5497";
+        public static string api_key = "5ccbA16427824e1347bA5751813f5497"; //5ccbA16427824e1347bA5751813f5497
+        public static string service = "sms-activate.ru"; //smshub.org
         public static (string tzid, string number) GetNumber(int countryCode)
         {
             try
@@ -21,7 +22,8 @@ namespace Live.com_Сombiner
                     request.UserAgent = Http.ChromeUserAgent();
                     request.EnableEncodingContent = true;
 
-                    string Response = request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=getNumber&service=ig&ref=&country=" + countryCode).ToString();
+                    string Response = request.Get("https://" + service + "/stubs/handler_api.php?api_key=" + api_key + "&action=getNumber&service=ig&ref=&country=" + countryCode).ToString();
+                    
 
                     if (Response.Contains("NO_NUMBERS"))
                         return (null, null);
@@ -43,11 +45,11 @@ namespace Live.com_Сombiner
                 request.UserAgent = Http.ChromeUserAgent();
                 request.EnableEncodingContent = true;
 
-                string Response = request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=setStatus&status=1&id=" + tzid).ToString();
+                string Response = request.Get("https://" + service + "/stubs/handler_api.php?api_key=" + api_key + "&action=setStatus&status=1&id=" + tzid).ToString();
 
                 for (int i = 0; i < 85; i++)
                 {
-                    Response = request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=getStatus&id=" + tzid).ToString();
+                    Response = request.Get("https://" + service + "/stubs/handler_api.php?api_key=" + api_key + "&action=getStatus&id=" + tzid).ToString();
 
                     if (Response.Contains("STATUS_CANCEL") || Response.Contains("NO_ACTIVATION") || Response.Contains("ERROR_SQL") || Response.Contains("BAD_KEY") || Response.Contains("BAD_ACTION"))
                         break;
@@ -56,7 +58,7 @@ namespace Live.com_Сombiner
 
                     Thread.Sleep(5000);
                 }
-                request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + "&action=setStatus&status=8&id=" + tzid).ToString();
+                request.Get("https://" + service + "/stubs/handler_api.php?api_key=" + api_key + "&action=setStatus&status=8&id=" + tzid).ToString();
                 return (null);
             }
         }
@@ -67,7 +69,7 @@ namespace Live.com_Сombiner
                 request.UserAgent = Http.ChromeUserAgent();
                 request.EnableEncodingContent = true;
 
-                request.Get("https://sms-activate.ru/stubs/handler_api.php?api_key=" + api_key + $"&action=setStatus&status={Status}&id=" + tzid).ToString();
+                request.Get("https://" + service + "/stubs/handler_api.php?api_key=" + api_key + $"&action=setStatus&status={Status}&id=" + tzid).ToString();
             }
         }
     }

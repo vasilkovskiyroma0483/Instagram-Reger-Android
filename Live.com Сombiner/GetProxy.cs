@@ -29,6 +29,10 @@ namespace Live.com_Сombiner
         /// Ссылка для проверки прокси.
         /// </summary>
         public static string ProxyCheckLink;
+        /// <summary>
+        /// Locker на выдачу прокси
+        /// </summary>
+        public static object lockerProxy = new object();
         #endregion
 
         #region Метод заполнения Прокси
@@ -125,7 +129,7 @@ namespace Live.com_Сombiner
                         return true;
                 }
             }
-            catch {};
+            catch { };
             return false;
         }
         #endregion
@@ -135,13 +139,13 @@ namespace Live.com_Сombiner
         {
             try
             {
-                // Если не использовать прокси - возвращаем null
-                if (ProxyMode == "Не использовать")
-                    return null;
-
-                // Если проверять прокси, проверяем прокси и возвращаем прокси если Прокси Живой.
-                if (ProxyMode == "Проверять")
+                lock (lockerProxy)
                 {
+                    // Если не использовать прокси - возвращаем null
+                    if (ProxyMode == "Не использовать")
+                        return null;
+
+                    // Возвращаем прокси
                     while (true)
                     {
                         Position++;
@@ -154,47 +158,14 @@ namespace Live.com_Сombiner
                             switch (TypeOfProxy)
                             {
                                 case "HTTP":
-                                    if (CheckProxy(ProxyClient.Parse(ProxyType.HTTP, Proxy[Position])))
-                                        return ProxyClient.Parse(ProxyType.HTTP, Proxy[Position]);
-                                    else
-                                        continue;
+                                    return ProxyClient.Parse(ProxyType.HTTP, Proxy[Position]);
                                 case "Socks4":
-                                    if (CheckProxy(ProxyClient.Parse(ProxyType.Socks4, Proxy[Position])))
-                                        return ProxyClient.Parse(ProxyType.Socks4, Proxy[Position]);
-                                    else
-                                        continue;
+                                    return ProxyClient.Parse(ProxyType.Socks4, Proxy[Position]);
                                 case "Socks5":
-                                    if (CheckProxy(ProxyClient.Parse(ProxyType.Socks5, Proxy[Position])))
-                                        return ProxyClient.Parse(ProxyType.Socks5, Proxy[Position]);
-                                    else
-                                        continue;
+                                    return ProxyClient.Parse(ProxyType.Socks5, Proxy[Position]);
                                 default:
                                     return null;
                             }
-                        }
-                    }
-                }
-
-                // Если не проверять прокси, просто возвращаем.
-                while (true)
-                {
-                    Position++;
-                    if (Position >= Proxy.Count)
-                    {
-                        Position = 0;
-                    }
-                    if (!String.IsNullOrEmpty(Proxy[Position]))
-                    {
-                        switch (TypeOfProxy)
-                        {
-                            case "HTTP":
-                                return ProxyClient.Parse(ProxyType.HTTP, Proxy[Position]);
-                            case "Socks4":
-                                return ProxyClient.Parse(ProxyType.Socks4, Proxy[Position]);
-                            case "Socks5":
-                                return ProxyClient.Parse(ProxyType.Socks5, Proxy[Position]);
-                            default:
-                                return null;
                         }
                     }
                 }

@@ -17,6 +17,10 @@ namespace Live.com_Сombiner
         /// Список UserAgent
         /// </summary>
         public static List<string> UserAgent = new List<string>();
+        /// <summary>
+        /// Locker на выдачу прокси
+        /// </summary>
+        public static object lockerUA = new object();
         public static Random rand = new Random((int)DateTime.Now.Ticks);
         #endregion
 
@@ -69,13 +73,16 @@ namespace Live.com_Сombiner
         {
             try
             {
-                if (CustomUserAgent)
+                lock (lockerUA)
                 {
-                    return Http.ChromeUserAgent();
-                }
-                else
-                {
-                    return UserAgent[rand.Next(0, UserAgent.Count)];
+                    if (CustomUserAgent)
+                    {
+                        return Http.ChromeUserAgent();
+                    }
+                    else
+                    {
+                        return UserAgent[rand.Next(0, UserAgent.Count)];
+                    }
                 }
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }

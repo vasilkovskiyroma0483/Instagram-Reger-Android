@@ -64,8 +64,7 @@ namespace Live.com_Сombiner
                     }
                 }
             }
-            catch (Exception exception)
-            { MessageBox.Show(exception.Message); }
+            catch { };
         }
         public static bool IsAlive()
         {
@@ -79,8 +78,7 @@ namespace Live.com_Сombiner
                     }
                 }
             }
-            catch (Exception exception)
-            { MessageBox.Show(exception.Message); }
+            catch { };
             return false;
         }
         #endregion
